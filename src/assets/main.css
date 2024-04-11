@@ -1,0 +1,48 @@
+*{
+    font-family: 'Copperplate', 'Copperplate Gothic', 'Arial', sans-serif;
+  
+  }
+body{
+  max-width: 100vw;
+  overflow-x: hidden;
+  padding: 0%;
+  margin: 0%;
+    
+}
+:root {
+  --apt-background:#FFF;
+  --apt-background-dark:#000;
+
+  --apt-element-background:#E4F4E9;
+  --apt-text:#000;
+  --apt-contrast-text:#fff;
+  --apt-text-label:#9D9994;
+  --apt-text-element-background:#E1F1EF;
+
+  --apt-button-background:#FBF59B;
+  --apt-button-secundary:#FAF1C0;
+
+}
+
+:root {
+  --color-background: var(--apt-background);
+
+  --element-background:var(--apt-element-background);
+  --color-text:var(--apt-text);
+  --color-contrast-text:var(--apt-contrast-text);
+  --color-text-label:var(--apt-text-label);
+  --color-text-element-background:var(--apt-text-element-background);
+
+  --color-button-background:var(--apt-button-background);
+  --color-button-secundary:var(--apt-button-secundary);
+
+}
+  
+.gradient {
+  width: 100%;
+  height: 100%;
+  
+  position: relative;
+  z-index: 2;
+  background-image: linear-gradient(to top, #000E, #fff0 40%);
+}
