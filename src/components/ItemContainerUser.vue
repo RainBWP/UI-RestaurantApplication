@@ -3,9 +3,10 @@
 const data = defineProps({
     imagen: String,
     imagenAlt: String,
-    precio: String,
+    precio: Number,
     nombre: String
 })
+
 </script>
 
 <template>
@@ -15,7 +16,7 @@ const data = defineProps({
             <p class="nameObj">{{ nombre }}</p>
             <img :src="imagen" :alt="imagenAlt">
         </div>
-        <p class="priceObj">${{ precio }}</p>
+        <p class="priceObj">${{ (precio/100).toFixed(2) }}</p>
         <button class="addObj" >+</button>
     </div>
 </template>
@@ -99,6 +100,7 @@ const data = defineProps({
     .priceObj {
         font-size: 15px;
         font-weight: bold;
+
     }
 
 </style>

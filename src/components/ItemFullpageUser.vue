@@ -26,7 +26,7 @@ const data = withDefaults(defineProps<ItemFullpage>(),{
         <div class="gradient"></div>
     </div>
     <div class="infoObj">
-        <h3>${{ precio }}</h3>
+        <h3>${{ (precio/100).toFixed(2) }}</h3>
         <p>{{ descripcion }}</p>
         <div class="textAreaHolder">
             <textarea name="notasAdicionales" 

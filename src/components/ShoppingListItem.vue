@@ -41,7 +41,7 @@ const data = withDefaults(defineProps<ShoppingData>(),{
         </div>
         
         <div>
-            <h2>${{ data.itemData.precio }}</h2>
+            <h2>${{ (data.itemData.precio/100).toFixed(2) }}</h2>
         </div>
     </div>
 

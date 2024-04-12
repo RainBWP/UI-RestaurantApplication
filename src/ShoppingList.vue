@@ -18,9 +18,9 @@ interface ShoppingList {
 
 const shoppingListData: ShoppingList = {
     items: [
-        { imagen: '/imagesTest/hamburger.jpg', precio: '200.1', cantidad: '2', imagenAlt: 'Deliciosa Hamburguesa',nombre: 'Hamburger' },
-        { imagen: '/imagesTest/owoburger.jpg', precio: '250.23', cantidad: '1', imagenAlt: 'Imagen 2', nombre:'Owoburger' },
-        { imagen: '/imagesTest/samwich.JPG', precio: '140.00', cantidad:'3',imagenAlt:'algo', nombre:'Sandwich'}
+        { imagen: '/imagesTest/hamburger.jpg', precio: 20010, cantidad: '2', imagenAlt: 'Deliciosa Hamburguesa',nombre: 'Hamburger' },
+        { imagen: '/imagesTest/owoburger.jpg', precio: 25023, cantidad: '1', imagenAlt: 'Imagen 2', nombre:'Owoburger' },
+        { imagen: '/imagesTest/samwich.JPG', precio: 14000, cantidad:'3',imagenAlt:'algo', nombre:'Sandwich'}
     ],
     nombreCliente: 'Nombre Cliente'
 };
@@ -63,7 +63,7 @@ if (!estaVacia(shoppingListData)) {
     <div class="shopingReady">
         <div>
             <h2>Total:</h2>
-            <h2>${{ totalPrecio }}</h2>
+            <h2>${{ (totalPrecio/100).toFixed(2) }}</h2>
         </div>
         <button>Proceder a la Compra
         </button>
@@ -80,18 +80,15 @@ if (!estaVacia(shoppingListData)) {
     .ShopingText h1{
         margin: 0;
         margin-top: 10vh;
-        font-size: 10vw;
         font-weight: bold;
-        letter-spacing: 1.2vw;
+        letter-spacing: .1em;
     }
     .ShopingText h2{
         margin: 0;
-        font-size: 5vw;
         font-weight: lighter;
         color: var(--color-text-label);
     }
     .shopingReady{
-        font-size: 3vw;
         padding: 5%;
 
         border-radius: 5vw;

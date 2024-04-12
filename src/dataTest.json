@@ -1,0 +1,47 @@
+{
+    "nombreRestaurante":"Restaurante Patito",
+    "nombreCliente":"Elias Rodolfo Esperanza",
+    "idRestaurante":123456,
+    "itemShopArray":[
+        {
+            "idItem":1,
+            "nombre":"Hamburger",
+            "imagen":"/imagesTest/hamburger.jpg",
+            "imagenAlt":"Deliciosa Hamburguesa",
+            "precio":20000,
+            "descripcion":"Los Huevos de Pascua de San Anfreas, tienen la particularidad de ser Obscuros y muy simiestros"
+        },
+        {
+            "idItem":2,
+            "nombre" : "Owoburger",
+            "imagen" : "/imagesTest/owoburger.jpg",
+            "imagenAlt":"Una OwO Hamburguesa",
+            "precio":25000,
+            "descripcion":"Se me antoja una owoburger bien cabron hdlv, ya se tiene hambre"
+        },
+        {
+            "idItem":3,
+            "nombre":"Sandwich",
+            "imagen":"/imagesTest/samwich.JPG",
+            "imagenAlt":"Un Sandwich bien rico",
+            "precio":14000,
+            "descripcion":"Es un Sandwich bien mamon con un poco de todo, y bastante barato jsjs"
+        },
+        {
+            "idItem":4,
+            "nombre":"ObjetoNombre",
+            "imagen":"/imagesTest/hamburger.jpg",
+            "imagenAlt":"ImagenNombre",
+            "precio":0,
+            "descripcion":"Descipcion Test"
+        },
+        {
+            "idItem":5,
+            "nombre":"Hamburger",
+            "imagen":"/imagesTest/hamburger.jpg",
+            "imagenAlt":"Deliciosa Hamburguesa",
+            "precio":20000,
+            "descripcion":"XD"
+        }
+]
+}

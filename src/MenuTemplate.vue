@@ -2,16 +2,17 @@
 import ItemContainerUser from './components/ItemContainerUser.vue';
 // imports and that things
 export interface Props {
-  itemValor?: String,
+  itemValor?: Number,
   nombreCliente?: String,
   itemShopArray?: Array<{imagen: String,
     imagenAlt: String,
-    precio: String,
+    precio: Number,
     nombre: String,
-    idItem: String}>
+    idItem: String,
+    descripcion:String}>
 }
 const promps = withDefaults(defineProps<Props>(),{
-  itemValor: '0.00',
+  itemValor: 0,
   nombreCliente: 'Nombre Cliente',
   itemShopArray: []
 })
@@ -29,28 +30,13 @@ const promps = withDefaults(defineProps<Props>(),{
 
   <div class="itemContainer">
     <ItemContainerUser 
-      nombre = "Hamburger"
-      imagen = "/imagesTest/hamburger.jpg"
-      imagenAlt="Deliciosa Hamburguesa"
-      precio="200.00"
+      v-for="(item, index) in itemShopArray" 
+      :key="index"
+      :nombre="item.nombre"
+      :imagen="item.imagen"
+      :imagenAlt="item.imagenAlt"
+      :precio="item.precio"
     />
-    <ItemContainerUser 
-      nombre = "Owoburger"
-      imagen = "/imagesTest/owoburger.jpg"
-      imagenAlt="Una OwO Hamburguesa"
-      precio="250.00"
-    />
-    <ItemContainerUser 
-      nombre = "Sandwich"
-      imagen = "/imagesTest/samwich.JPG"
-      imagenAlt="Un Sandwich bien rico"
-      precio="140.00"
-    />
-    <ItemContainerUser />
-    <ItemContainerUser />
-    <ItemContainerUser />
-    <ItemContainerUser />
-    <ItemContainerUser />
   </div>
     
 
@@ -59,16 +45,21 @@ const promps = withDefaults(defineProps<Props>(),{
 
 <style scoped>
 /* css content */
+  template {
+    max-width: 100%;
+    overflow-x: hidden
+  }
   .itemContainer {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 2fr));
-    grid-gap: 10px;
+    grid-gap: 0;
     justify-items: center;
   }
   .importantItems{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: baseline;
+    max-width: 100%;
   }
   .clientName{
     font-size: 20px;
