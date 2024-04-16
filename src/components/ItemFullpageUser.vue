@@ -3,7 +3,7 @@
 export interface ItemFullpage {
     imagen?: string,
     imagenAlt?: string,
-    precio?: string,
+    precio?: number,
     nombre?: string,
     descripcion?: string,
     notasAdicionales?: string
@@ -12,7 +12,7 @@ export interface ItemFullpage {
 const data = withDefaults(defineProps<ItemFullpage>(),{
     imagen:'/imagesTest/owoburger.jpg',
     imagenAlt:'Imagen de Prueba',
-    precio: '123.45',
+    precio: 12345,
     descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     nombre: 'Hamburger'
 })
@@ -55,9 +55,6 @@ const data = withDefaults(defineProps<ItemFullpage>(),{
         height: 30vh;
         border-bottom-left-radius: 5vw;
         border-bottom-right-radius: 5vw;
-    }
-    .headerImagen h2 {
-        
     }
     .headerImagen img{
         position: absolute; /* Establecer posición absoluta para posicionar la imagen dentro del contenedor */
