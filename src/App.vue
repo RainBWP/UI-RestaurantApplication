@@ -7,7 +7,16 @@ import dataJson from "@/dataTest.json"
 let nombreRestaurante="Restaurante";
 let nombreCliente="Nombre Cliente";
 let idRestaurante=0;
-let itemShopArray=[]
+
+
+let itemShopArray=[{
+    idItem: 0,
+    imagen:"",
+    descripcion:"",
+    imagenAlt:"",
+    nombre:"",
+    precio: 0,
+}]
 
 // getJsonData
     if (dataJson) {
