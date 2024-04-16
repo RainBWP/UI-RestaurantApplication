@@ -2,19 +2,18 @@
 import ItemContainerUser from './components/ItemContainerUser.vue';
 // imports and that things
 export interface Props {
-  itemValor?: Number,
-  nombreCliente?: String,
-  itemShopArray?: Array<{imagen: String,
-    imagenAlt: String,
-    precio: Number,
-    nombre: String,
-    idItem: String,
-    descripcion:String}>
+  itemValor?: number,
+  nombreCliente?: string,
+  itemShopArray?: Array<{imagen: string,
+    imagenAlt: string,
+    precio: number,
+    nombre: string,
+    idItem: string,
+    descripcion: string}>
 }
 const promps = withDefaults(defineProps<Props>(),{
   itemValor: 0,
-  nombreCliente: 'Nombre Cliente',
-  itemShopArray: []
+  nombreCliente: 'Nombre Cliente'
 })
 
 </script>
