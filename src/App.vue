@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { ref } from "vue"
+
+
 import MenuTemplate  from "./MenuTemplate.vue";
 import ItemFullpageUser from "./components/ItemFullpageUser.vue"
 import ShoppingListUser from "./ShoppingList.vue";
@@ -16,6 +19,7 @@ let itemShopArray=[{
     imagenAlt:"",
     nombre:"",
     precio: 0,
+    cantidad:0
 }]
 
 // getJsonData
