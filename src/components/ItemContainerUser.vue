@@ -1,11 +1,15 @@
 <script setup lang="ts">
 
+
+
 const data = defineProps({
     imagen: String,
     imagenAlt: String,
     precio: Number,
     nombre: String
 })
+
+
 
 </script>
 
