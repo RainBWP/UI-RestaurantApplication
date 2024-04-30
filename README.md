@@ -1,19 +1,5 @@
-# vue-tests
-
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
+# Aplicacion para Restaurante (Proyecto de Aplicaciones Web)
+Frontend hecho con **Vue** usando **TypeScript**
 ## Project Setup
 
 ```sh
@@ -31,3 +17,14 @@ npm run dev
 ```sh
 npm run build
 ```
+
+# Componentes que se pueden encontrar
+## Inicio De Seccion
+Permite iniciar seccion entre un cliente o restaurante, depende lo que se necesite
+
+## Menu de Objetos
+Presenta un menu con los objetos que el cliente puede comprar, se le da acceso a una pantalla de seleccion donde puede escojer que agregar
+### Item en pantalla completa
+Puede ampliar un item a pantalla completa para ver una descripcion del producto haciendo click en el elemento deseado
+### Carrito de Compra
+Cuenta con un carrito de compra donde podra ver todos los elementos agregados a su lista, puede poner o quitar lo que no desee y ver el total del pedido con la cantidad
