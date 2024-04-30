@@ -9,8 +9,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - id: Build-Vue
-      uses: xRealNeon/VuePagesAction@1.0.1
+      uses: xRealNeon/VuePagesAction@803b88b34a8c4177efad63425155f35419e3a9c6
       with:
         username: 'RainBWP'
         reponame: 'UI-RestaurantApplication'
         token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged
+        gitname: 'RainBWP'
+        
