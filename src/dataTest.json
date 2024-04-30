@@ -42,6 +42,14 @@
             "imagenAlt":"Deliciosas Enchiladas Rojas",
             "precio":20000,
             "descripcion":"Enchiladas hechas con tortilla enchilada y pollo rojo"
+        },
+        {
+            "idItem":6,
+            "nombre":"Jugo de Naranja",
+            "imagen":"/imagesTest/jugohd.jpeg",
+            "imagenAlt":"Delicioso Jugo",
+            "precio":20000,
+            "descripcion":"Delicioso Jugo de Naranja hecho con amor de mamá"
         }
 ]
 }
