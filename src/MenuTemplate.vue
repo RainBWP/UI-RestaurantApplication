@@ -16,6 +16,7 @@ export interface Props {
   deleteItem: Function,
   itemNest: Array<ItemShop>,
   nombreRestaurante: string,
+  
 
 }
 const promps = withDefaults(defineProps<Props>(),{
@@ -99,6 +100,7 @@ function checkShow() {
   :addItem="promps.addItem"
   :deleteItem="promps.deleteItem"
   :showCarrito="showCarrito"
+  :-item-valor="itemValor"
   />
 
   

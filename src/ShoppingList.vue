@@ -11,32 +11,30 @@ interface ShoppingList {
     addItem:Function,
     deleteItem:Function,
     showCarrito: Function,
+    ItemValor:number,
 }
 
-const shoppingListData = withDefaults(defineProps<ShoppingList>(),{
-    items: defaultItemShopArray,
-    nombreCliente: "Nombre Cliente"
-})
-
+const shoppingListData =defineProps<ShoppingList>()
 let totalPrecio = 0;
 
 function estaVacia(shoppingList: ShoppingList): boolean {
     return !shoppingList || !shoppingList.items || shoppingList.items.length === 0;
 }
 
-if (!estaVacia(shoppingListData)) {
-    var total= 0.0;
-    for (let index = 0; index < shoppingListData.items.length; index++) {
-        const element = shoppingListData.items[index];
-        
-        total = total+ element.precio*element.cantidad;
-        if (index===999) {
-            break
+const updatePrice = () => {
+    if (!estaVacia(shoppingListData)) {
+        var total= 0;
+        for (let index = 0; index < shoppingListData.items.length; index++) {
+            const element = shoppingListData.items[index];
+            
+            total = total+ element.precio*element.cantidad;
         }
-    }
 
-    totalPrecio = total
+        totalPrecio = total
+        }
 }
+
+
 
 </script>
 
@@ -62,7 +60,7 @@ if (!estaVacia(shoppingListData)) {
     <div class="shopingReady">
         <div>
             <h2>Total:</h2>
-            <h2>${{ (totalPrecio/100).toFixed(2) }}</h2>
+            <h2>${{ (ItemValor/100).toFixed(2) }}</h2>
         </div>
         <button>Proceder a la Compra</button>
         <button @click="showCarrito()" class="regresar">Regresar</button>
