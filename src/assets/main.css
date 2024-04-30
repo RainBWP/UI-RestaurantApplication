@@ -20,6 +20,7 @@ body{
   --apt-text-element-background:#E1F1EF;
 
   --apt-button-background:#FBF59B;
+  --apt-button-background-hover: #fffeed;
   --apt-button-secundary:#FAF1C0;
 
 }
@@ -34,6 +35,7 @@ body{
   --color-text-element-background:var(--apt-text-element-background);
 
   --color-button-background:var(--apt-button-background);
+  --color-button-background-hover:var(--apt-button-background-hover);
   --color-button-secundary:var(--apt-button-secundary);
 
 }
