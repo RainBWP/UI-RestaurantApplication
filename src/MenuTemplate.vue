@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ItemContainerUser from './components/ItemContainerUser.vue';
 
-import { type ItemShop, type restaurantData, defaultItemShopArray} from './interfaces'
+import { type ItemShop, defaultItemShopArray} from './interfaces'
 
 // imports and that things
 export interface Props {
