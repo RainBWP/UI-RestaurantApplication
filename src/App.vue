@@ -30,29 +30,9 @@ if (dataJson) {
 // Recuperar Datos si se recargo la pagina por error
 const storedItemsSelected = localStorage.getItem('itemsSelected');
 let itemsSelected:ItemShop[]
-/* if (storedItemsSelected) {
-    itemsSelected = JSON.parse(storedItemsSelected);
-    // Ahora itemsSelected contiene los datos guardados en la caché
-} else {
-    itemsSelected = dataRef.value.itemShopArray
-    // inicializar los elementos en cantidad 0
-    itemsSelected.forEach(item => {
-        item.cantidad=0;
-    });
-}
- */
 
-// comentar al terminar
-itemsSelected = dataRef.value.itemShopArray
-// inicializar los elementos en cantidad 0
-itemsSelected.forEach(item => {
-    item.cantidad=0;
-});
-
+// calcular total de pedido
 const totalItemsMoney = ref(0);
-
-
-
 function calculateMoney() {
     totalItemsMoney.value=0
     itemsSelected.forEach(itemsSelected => {
@@ -60,6 +40,27 @@ function calculateMoney() {
     });
 }
 
+if (storedItemsSelected) {
+    dataRef.value.itemShopArray = JSON.parse(storedItemsSelected);
+    itemsSelected = dataRef.value.itemShopArray
+    calculateMoney()
+    // Ahora itemsSelected contiene los datos guardados en la caché
+} else {
+    itemsSelected = dataRef.value.itemShopArray
+    // inicializar los elementos en cantidad 0
+    itemsSelected.forEach(item => {
+        item.cantidad=0;
+    });
+    calculateMoney()
+}
+
+
+/* // comentar al terminar
+itemsSelected = dataRef.value.itemShopArray
+// inicializar los elementos en cantidad 0
+itemsSelected.forEach(item => {
+    item.cantidad=0;
+}); */
 
 const addItem = (itemAdded:number) => {
     
@@ -105,6 +106,7 @@ console.log(itemsSelected);
         :addItem="addItem"
         :deleteItem="deleteItem"
         :item-nest="itemsSelected"
+        :nombre-restaurante="dataRef.nombreRestaurante"
     />
 
     <!-- <ItemFullpageUser v-for="(item, index) in dataRef.itemShopArray"

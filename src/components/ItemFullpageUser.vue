@@ -5,6 +5,7 @@ export interface ItemFull {
     ItemShop:ItemShop,
     addItem: Function,
     deleteItem: Function,
+    showFullScreen:Function
 }
 
 const data = defineProps<ItemFull>()
@@ -14,7 +15,7 @@ const data = defineProps<ItemFull>()
     <div class="headerImagen">
         <img :src="data.ItemShop.imagen" :alt="data.ItemShop.imagenAlt">
         <h2 class="nameObj">{{ data.ItemShop.nombre }}</h2>
-        <button class="backButton"><</button>
+        <button @click="showFullScreen(undefined)" class="backButton"><</button>
         <div class="gradient"></div>
     </div>
     <div class="infoObj">
@@ -71,6 +72,7 @@ const data = defineProps<ItemFull>()
         z-index: 3;
     }
     .backButton{
+        z-index: 10;
         position: absolute;
         margin: 20px;
         width: 50px;

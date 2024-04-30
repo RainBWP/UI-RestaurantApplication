@@ -4,6 +4,8 @@ import { ref } from 'vue';
 
 import { type ItemShop, defaultItemShopArray} from './interfaces'
 import ShoppingList from './ShoppingList.vue';
+import { defaultItemShop } from './interfaces';
+import ItemFullpageUser from './components/ItemFullpageUser.vue';
 
 // imports and that things
 export interface Props {
@@ -12,7 +14,8 @@ export interface Props {
   itemShopArray: Array<ItemShop>,
   addItem: Function,
   deleteItem: Function,
-  itemNest: Array<ItemShop>
+  itemNest: Array<ItemShop>,
+  nombreRestaurante: string,
 
 }
 const promps = withDefaults(defineProps<Props>(),{
@@ -24,6 +27,32 @@ const showCarritoVar = ref(false)
 
 const showCarrito = () =>{
   showCarritoVar.value=!showCarritoVar.value
+  checkShow()
+}
+
+const showFullScreenVar = ref(false)
+const showFullScreenData = ref(defaultItemShop)
+const showFullScreen = (itemShop:ItemShop) => {
+  
+  if (itemShop) {
+    showFullScreenVar.value = true
+    showFullScreenData.value = itemShop
+  }else {
+    showFullScreenVar.value = !showFullScreenVar.value
+  }
+  checkShow()
+}
+
+const canIShow = ref(true)
+function checkShow() {
+
+  if (showCarritoVar.value && showFullScreenVar) {
+    canIShow.value = false;
+    showFullScreenVar.value = false;
+  }
+
+  canIShow.value = !(showFullScreenVar.value || showCarritoVar.value)
+  console.log(showFullScreenVar.value || showCarritoVar.value)
 }
 
 </script>
@@ -31,26 +60,37 @@ const showCarrito = () =>{
 <template>
 <!-- html content -->
 
-  <div v-if="!showCarritoVar">
+  <div v-if="canIShow">
       <h1>Menu</h1>
+      <h3>{{nombreRestaurante }}</h3>
     <div class="importantItems">
       <h2>Total: ${{ (itemValor/100).toFixed(2) }}</h2>
       <h2 class="clientName">{{ nombreCliente }}</h2>
     </div>
 
-    <div  class="itemContainer">
+    <div class="itemContainer">
       <ItemContainerUser 
         v-for="(item, index) in itemShopArray" 
         :itemShop="item"
         :addItem="promps.addItem"
         :deleteItem="promps.deleteItem"
+        :showFullScreen="showFullScreen"
       />
     </div>
 
-    <button  @click="showCarrito()" class="carrito"></button>
-  </div>
+    
 
-  
+  </div>
+  <button  @click="showCarrito()" class="carrito"></button>
+
+  <div> 
+      <ItemFullpageUser v-if="showFullScreenVar"
+      :ItemShop="showFullScreenData"
+      :addItem="addItem"
+      :deleteItem="deleteItem"
+      :showFullScreen="showFullScreen"
+      />
+  </div>
     
   <ShoppingList 
   v-if="showCarritoVar"
@@ -94,7 +134,7 @@ const showCarrito = () =>{
 
     width: 80px;
     height: 80px;
-    z-index: 10;
+    z-index: 11;
 
     background-color: var(--color-button-background);
     background-image: url('/shopping-cart-svgrepo-com.svg');
@@ -123,5 +163,12 @@ const showCarrito = () =>{
     display: flex;
     font-weight: bolder;
     justify-content: center;
+  }
+  h3 {
+    position: relative;
+    display: flex;
+    font-weight: normal;
+    justify-content: center;
+    color: var(--color-text-label);
   }
 </style>

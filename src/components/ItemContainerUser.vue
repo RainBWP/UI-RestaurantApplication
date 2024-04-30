@@ -12,8 +12,8 @@
 </script>
 
 <template>
-    <div class="frontObj">
-        <div class="image">
+    <div class="frontObj" >
+        <div class="image" @click="showFullScreen(itemShop)">
             <div class="gradient"></div>
             <p class="nameObj">{{ itemShop.nombre }}</p>
             <img :src="itemShop.imagen" :alt="itemShop.imagenAlt">
@@ -74,9 +74,8 @@
         min-height: 100%; 
     }
 
-    .image img:hover{
-        transform: translate(-80%, -80%);
-
+    .gradient:hover{
+        opacity: 50%;
     }
 
     .nameObj, .priceObj {
@@ -86,6 +85,10 @@
         font-weight: lighter; /* Peso de fuente del texto */
         z-index: 3;
         letter-spacing: 2px;
+        user-select: none;
+    }
+    .nameObj:hover {
+        font-size: large;
     }
     .addObj {
         position: absolute;
@@ -103,7 +106,7 @@
         box-shadow: 0px 4px 6px #0006;
         text-align: center;
         color: var(--color-text);
-
+        
     }
 
     .addObj:hover {

@@ -13,6 +13,7 @@ export interface ItemShopComponent {
   itemShop: ItemShop;
   addItem: Function;
   deleteItem: Function;
+  showFullScreen: Function;
 }
 
 export interface restaurantData {
@@ -32,3 +33,12 @@ export const defaultItemShopArray = (): ItemShop[] => [{
   cantidad: 0
 }];
 
+export const defaultItemShop:ItemShop = {
+  idItem: 0,
+  imagen: "",
+  descripcion: "",
+  imagenAlt: "",
+  nombre: "",
+  precio: 0,
+  cantidad: 0
+}
