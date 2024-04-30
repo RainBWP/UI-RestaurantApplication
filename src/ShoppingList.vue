@@ -9,7 +9,8 @@ interface ShoppingList {
     items: ItemShop[],
     nombreCliente: string,
     addItem:Function,
-    deleteItem:Function
+    deleteItem:Function,
+    showCarrito: Function,
 }
 
 const shoppingListData = withDefaults(defineProps<ShoppingList>(),{
@@ -63,12 +64,15 @@ if (!estaVacia(shoppingListData)) {
             <h2>Total:</h2>
             <h2>${{ (totalPrecio/100).toFixed(2) }}</h2>
         </div>
-        <button>Proceder a la Compra
-        </button>
+        <button>Proceder a la Compra</button>
+        <button @click="showCarrito()" class="regresar">Regresar</button>
     </div>
 </template>
 
 <style scoped>
+    *{
+        transition: all 0.25s;
+    }
     div{
         margin: 5%;
     }
@@ -100,27 +104,36 @@ if (!estaVacia(shoppingListData)) {
         margin-top: 0;
 
     }
-    .shopingReady button {
-        font-size: 5vw
-    }
+
     button {
         width: 100%;
-            background-color: var(--color-button-background);
-            border-radius: 2vw;
-            padding: 2%;
-            overflow: hidden;
-            border: none;
-            box-shadow:  0px 0px 10px #000000; 
+        background-color: var(--color-button-background);
+        border-radius: 2vw;
+        padding: 2%;
+        overflow: hidden;
+        border: none;
+        box-shadow:  0px 0px 10px #000000; 
+        margin: 20px;
 
-            font-size: 2.5vw;
-            font-weight: bold;
-            color: var(--color-text)
-        }
+        font-size: 5vw;
+        font-weight: bold;
+        color: var(--color-text);
+        margin-left: 0;
+        margin-right: 0%;
+    }
+    .regresar{
+        font-size: 3vw;
+    }
+
+    button:hover {
+        background-color: var(--color-button-background-hover);
+    }
     .ShopingGrid {
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
         margin: 5%;
+        
         align-content: center;
     }
 </style>

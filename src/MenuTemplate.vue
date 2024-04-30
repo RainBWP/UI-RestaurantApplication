@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import ItemContainerUser from './components/ItemContainerUser.vue';
+import { ref } from 'vue';
 
 import { type ItemShop, defaultItemShopArray} from './interfaces'
+import ShoppingList from './ShoppingList.vue';
 
 // imports and that things
 export interface Props {
@@ -10,6 +12,7 @@ export interface Props {
   itemShopArray: Array<ItemShop>,
   addItem: Function,
   deleteItem: Function,
+  itemNest: Array<ItemShop>
 
 }
 const promps = withDefaults(defineProps<Props>(),{
@@ -17,29 +20,48 @@ const promps = withDefaults(defineProps<Props>(),{
   nombreCliente: 'Nombre Cliente',
   itemShopArray: defaultItemShopArray
 })
+const showCarritoVar = ref(false)
+
+const showCarrito = () =>{
+  showCarritoVar.value=!showCarritoVar.value
+}
 
 </script>
 
 <template>
 <!-- html content -->
 
-  <h1>Menu</h1>
-  <div class="importantItems">
-    <h2>Total: ${{ (itemValor/100).toFixed(2) }}</h2>
-    <h2 class="clientName">{{ nombreCliente }}</h2>
+  <div v-if="!showCarritoVar">
+      <h1>Menu</h1>
+    <div class="importantItems">
+      <h2>Total: ${{ (itemValor/100).toFixed(2) }}</h2>
+      <h2 class="clientName">{{ nombreCliente }}</h2>
+    </div>
+
+    <div  class="itemContainer">
+      <ItemContainerUser 
+        v-for="(item, index) in itemShopArray" 
+        :itemShop="item"
+        :addItem="promps.addItem"
+        :deleteItem="promps.deleteItem"
+      />
+    </div>
+
+    <button  @click="showCarrito()" class="carrito"></button>
   </div>
 
-  <div class="itemContainer">
-    <ItemContainerUser 
-      v-for="(item, index) in itemShopArray" 
-      :itemShop="item"
-      :addItem="promps.addItem"
-      :deleteItem="promps.deleteItem"
-    />
-  </div>
+  
     
+  <ShoppingList 
+  v-if="showCarritoVar"
+  :items="itemNest"
+  :nombreCliente="promps.nombreCliente"
+  :addItem="promps.addItem"
+  :deleteItem="promps.deleteItem"
+  :showCarrito="showCarrito"
+  />
 
-  <button class="carrito"></button>
+  
 </template>
 
 <style scoped>
@@ -85,7 +107,16 @@ const promps = withDefaults(defineProps<Props>(),{
     box-shadow: 0px 4px 6px #0006;
     text-align: center;
     color: var(--color-text);
+    transition: all 0.25s;
   }
+
+  .carrito:hover{
+    background-color: var(--color-button-background-hover);
+    background-size: 65%;
+  }
+
+
+
   h1 {
     margin-top: 10%;
     position: relative;

@@ -104,9 +104,10 @@ console.log(itemsSelected);
         :item-valor="totalItemsMoney"
         :addItem="addItem"
         :deleteItem="deleteItem"
+        :item-nest="itemsSelected"
     />
 
-    <ItemFullpageUser v-for="(item, index) in dataRef.itemShopArray"
+    <!-- <ItemFullpageUser v-for="(item, index) in dataRef.itemShopArray"
         :-item-shop="item"
         :add-item="addItem"
         :delete-item="deleteItem"
@@ -117,7 +118,7 @@ console.log(itemsSelected);
         :nombre-cliente="dataRef.nombreCliente"
         :add-item="addItem"
         :delete-item="deleteItem"
-    />
+    /> -->
         
     </div>
 
