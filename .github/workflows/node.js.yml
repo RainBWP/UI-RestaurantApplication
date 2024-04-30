@@ -33,6 +33,6 @@ jobs:
       run: npm run build --if-present
 
     - name: Deploy
-      uses: RainBWP/UI-RestaurantApplication@main
+      uses: RainBWP/UI-RestaurantApplication@808f7885578bc80789c13a2a4da535b03f7cf1ff
       with:
         folder: build
