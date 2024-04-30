@@ -1,19 +1,21 @@
 <script setup lang="ts">
 import ItemContainerUser from './components/ItemContainerUser.vue';
+
+import { type ItemShop, type restaurantData, defaultItemShopArray} from './interfaces'
+
 // imports and that things
 export interface Props {
-  itemValor?: number,
-  nombreCliente?: string,
-  itemShopArray?: Array<{imagen: string,
-    imagenAlt: string,
-    precio: number,
-    nombre: string,
-    idItem: string,
-    descripcion: string}>
+  itemValor: number,
+  nombreCliente: string,
+  itemShopArray: Array<ItemShop>,
+  addItem: Function,
+  deleteItem: Function,
+
 }
 const promps = withDefaults(defineProps<Props>(),{
   itemValor: 0,
-  nombreCliente: 'Nombre Cliente'
+  nombreCliente: 'Nombre Cliente',
+  itemShopArray: defaultItemShopArray
 })
 
 </script>
@@ -23,18 +25,16 @@ const promps = withDefaults(defineProps<Props>(),{
 
   <h1>Menu</h1>
   <div class="importantItems">
-    <h2>Total: ${{ itemValor }}</h2>
+    <h2>Total: ${{ (itemValor/100).toFixed(2) }}</h2>
     <h2 class="clientName">{{ nombreCliente }}</h2>
   </div>
 
   <div class="itemContainer">
     <ItemContainerUser 
       v-for="(item, index) in itemShopArray" 
-      :key="index"
-      :nombre="item.nombre"
-      :imagen="item.imagen"
-      :imagenAlt="item.imagenAlt"
-      :precio="item.precio"
+      :itemShop="item"
+      :addItem="promps.addItem"
+      :deleteItem="promps.deleteItem"
     />
   </div>
     

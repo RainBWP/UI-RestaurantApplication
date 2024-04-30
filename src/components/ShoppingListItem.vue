@@ -1,30 +1,21 @@
 <script setup lang="ts">
-import ShoppingListItemModule from "./ShoppingListItem.vue";
 
-
+import type { ItemShop } from "@/interfaces";
+import { defaultItemShopArray } from "@/interfaces";
 
 export interface ShoppingData {
-    itemData?: Object
+    itemData: ItemShop,
+    addItem: Function,
+    deleteItem:Function,
 }
 
-const data = withDefaults(defineProps<ShoppingData>(),{
-    itemData: Object()
-})
-    if (!data.itemData.imagen) {
-        data.itemData.imagen = '/imagesTest/hamburger.jpg';
-        data.itemData.precio = '0.00';
-        data.itemData.cantidad = '0';
-        data.itemData.imagenAlt = 'Imagen De Prueba';
-        data.itemData.nombre ='Hamburger' ; 
-    }
-    
-
+const data = defineProps<ShoppingData>()
 
 </script>
 
-<template>
+<template >
 
-    <div class="itemHolder">
+    <div class="itemHolder" v-if="data.itemData.cantidad>0">
         <div class="itemHolder2">
             <div class="headerImagen">
                 <div class="gradient"></div>
@@ -34,8 +25,8 @@ const data = withDefaults(defineProps<ShoppingData>(),{
                 <b>{{ data.itemData.nombre }}</b>
                 <p>Cantidad: {{ data.itemData.cantidad }}</p>
                 <div>
-                    <button>-</button>
-                    <button>+</button>
+                    <button @click="deleteItem(data.itemData.idItem)">-</button>
+                    <button @click="addItem(data.itemData.idItem)">+</button>
                 </div>
             </div>
         </div>

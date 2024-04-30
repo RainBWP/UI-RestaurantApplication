@@ -1,15 +1,13 @@
 <script setup lang="ts">
 
+    import type { ItemShopComponent } from '@/interfaces';
+    import { defineProps } from 'vue';
 
-
-const data = defineProps({
-    imagen: String,
-    imagenAlt: String,
-    precio: Number,
-    nombre: String
-})
-
-
+    const promps = defineProps<ItemShopComponent>()
+    
+    const addItemR = () =>{
+        promps.addItem(promps.itemShop.idItem)
+    }
 
 </script>
 
@@ -17,15 +15,19 @@ const data = defineProps({
     <div class="frontObj">
         <div class="image">
             <div class="gradient"></div>
-            <p class="nameObj">{{ nombre }}</p>
-            <img :src="imagen" :alt="imagenAlt">
+            <p class="nameObj">{{ itemShop.nombre }}</p>
+            <img :src="itemShop.imagen" :alt="itemShop.imagenAlt">
         </div>
-        <p class="priceObj">${{ (precio/100).toFixed(2) }}</p>
-        <button class="addObj" >+</button>
+        <p class="priceObj">${{ (itemShop.precio/100).toFixed(2) }}</p>
+        <button class="addObj" @click="addItemR">+</button>
     </div>
 </template>
 
 <style scoped>
+    *{
+        transition: all 0.25s;
+    }
+
     .frontObj {
         display: flex;
         position: relative;
@@ -61,6 +63,7 @@ const data = defineProps({
 
         border-radius: 20px;
         
+        transition: 0.3s;
     }
     .image img {
         position: absolute; /* Establecer posición absoluta para posicionar la imagen dentro del contenedor */
@@ -69,6 +72,11 @@ const data = defineProps({
         transform: translate(-50%, -50%); /* Centrar la imagen completamente */
         max-width: 100%; 
         min-height: 100%; 
+    }
+
+    .image img:hover{
+        transform: translate(-80%, -80%);
+
     }
 
     .nameObj, .priceObj {
@@ -95,7 +103,15 @@ const data = defineProps({
         box-shadow: 0px 4px 6px #0006;
         text-align: center;
         color: var(--color-text);
+
     }
+
+    .addObj:hover {
+        background-color: var(--color-button-background-hover);
+        font-size: 20px;
+    }
+
+    
 
     .nameObj {
         color: white; /* Color del texto */

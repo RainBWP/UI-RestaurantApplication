@@ -1,33 +1,25 @@
 <script setup lang="ts">
+import type { ItemShop } from "@/interfaces";
 
-export interface ItemFullpage {
-    imagen?: string,
-    imagenAlt?: string,
-    precio?: number,
-    nombre?: string,
-    descripcion?: string,
-    notasAdicionales?: string
+export interface ItemFull {
+    ItemShop:ItemShop,
+    addItem: Function,
+    deleteItem: Function,
 }
 
-const data = withDefaults(defineProps<ItemFullpage>(),{
-    imagen:'/imagesTest/owoburger.jpg',
-    imagenAlt:'Imagen de Prueba',
-    precio: 12345,
-    descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    nombre: 'Hamburger'
-})
+const data = defineProps<ItemFull>()
 </script>
 
 <template>
     <div class="headerImagen">
-        <img :src="imagen" :alt="imagenAlt">
-        <h2 class="nameObj">{{ nombre }}</h2>
+        <img :src="data.ItemShop.imagen" :alt="data.ItemShop.imagenAlt">
+        <h2 class="nameObj">{{ data.ItemShop.nombre }}</h2>
         <button class="backButton"><</button>
         <div class="gradient"></div>
     </div>
     <div class="infoObj">
-        <h3>${{ (precio/100).toFixed(2) }}</h3>
-        <p>{{ descripcion }}</p>
+        <h3>${{ (data.ItemShop.precio/100).toFixed(2) }}</h3>
+        <p>{{ data.ItemShop.descripcion }}</p>
         <div class="textAreaHolder">
             <textarea name="notasAdicionales" 
             id="notasAdicionales"  
@@ -38,14 +30,17 @@ const data = withDefaults(defineProps<ItemFullpage>(),{
             rows="3" ></textarea>
         </div>
         <div >
-            <button style="width: 80%;">Agregar Al Carrito</button>
-            <button style="width: 10%;">-</button>
+            <button @click="addItem(data.ItemShop.idItem)" style="width: 80%;">Agregar Al Carrito</button>
+            <button @click="deleteItem(data.ItemShop.idItem)" style="width: 10%;">-</button>
         </div>
     </div>
 
 </template>
 
 <style scoped>
+    *{
+        transition: all 0.25s;
+    }
     
     .headerImagen{
         margin: 0%;
@@ -144,7 +139,12 @@ const data = withDefaults(defineProps<ItemFullpage>(),{
         box-shadow:  0px 0px 10px #000000; 
 
         font-size: 2.5vh;
-        color: var(--color-text)
+        color: var(--color-text);
+
+    }
+    .infoObj button:hover{
+        background-color: var(--color-button-background-hover);
+        font-size: 2.7vh;
     }
     .infoObj div {
         display: flex;

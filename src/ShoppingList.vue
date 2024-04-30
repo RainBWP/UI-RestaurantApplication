@@ -1,31 +1,23 @@
 <script setup lang="ts">
 import ShoppingListItemModule from "./components/ShoppingListItem.vue";
 
+import type { ItemShop } from "./interfaces";
+import { defaultItemShopArray } from "./interfaces";
 
-
-interface ShoppingListItem {
-    imagen?: string,
-    precio?: string,
-    cantidad?: string,
-    imagenAlt?: string,
-    nombre?: string,
-}
 
 interface ShoppingList {
-    items: ShoppingListItem[],
-    nombreCliente: string
+    items: ItemShop[],
+    nombreCliente: string,
+    addItem:Function,
+    deleteItem:Function
 }
 
-const shoppingListData: ShoppingList = {
-    items: [
-        { imagen: '/imagesTest/hamburger.jpg', precio: 20010, cantidad: '2', imagenAlt: 'Deliciosa Hamburguesa',nombre: 'Hamburger' },
-        { imagen: '/imagesTest/owoburger.jpg', precio: 25023, cantidad: '1', imagenAlt: 'Imagen 2', nombre:'Owoburger' },
-        { imagen: '/imagesTest/samwich.JPG', precio: 14000, cantidad:'3',imagenAlt:'algo', nombre:'Sandwich'}
-    ],
-    nombreCliente: 'Nombre Cliente'
-};
+const shoppingListData = withDefaults(defineProps<ShoppingList>(),{
+    items: defaultItemShopArray,
+    nombreCliente: "Nombre Cliente"
+})
 
-let totalPrecio = '0.00';
+let totalPrecio = 0;
 
 function estaVacia(shoppingList: ShoppingList): boolean {
     return !shoppingList || !shoppingList.items || shoppingList.items.length === 0;
@@ -36,13 +28,13 @@ if (!estaVacia(shoppingListData)) {
     for (let index = 0; index < shoppingListData.items.length; index++) {
         const element = shoppingListData.items[index];
         
-        total = total+ parseFloat(element.precio)*parseInt(element.cantidad);
+        total = total+ element.precio*element.cantidad;
         if (index===999) {
             break
         }
     }
 
-    totalPrecio = total.toFixed(2)
+    totalPrecio = total
 }
 
 </script>
@@ -55,7 +47,13 @@ if (!estaVacia(shoppingListData)) {
     
 
     <div class="ShopingGrid">
-        <ShoppingListItemModule v-for="(item, index) in shoppingListData.items" :key="index" :itemData="item" />
+        <ShoppingListItemModule 
+            v-for="(item, index) in shoppingListData.items" 
+            :key="index" 
+            :itemData="item" 
+            :addItem="addItem"
+            :deleteItem="deleteItem"
+        />
     </div>
 
     

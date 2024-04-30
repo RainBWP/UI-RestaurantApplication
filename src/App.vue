@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { defineProps, withDefaults } from "vue";
+
 import { ref } from "vue"
 
 
@@ -7,31 +9,88 @@ import ItemFullpageUser from "./components/ItemFullpageUser.vue"
 import ShoppingListUser from "./ShoppingList.vue";
 import dataJson from "@/dataTest.json"
 
-let nombreRestaurante="Restaurante";
-let nombreCliente="Nombre Cliente";
-let idRestaurante=0;
+import type { ItemShop, restaurantData } from './interfaces';
+import { defaultItemShopArray } from './interfaces';
 
 
-let itemShopArray=[{
-    idItem: 0,
-    imagen:"",
-    descripcion:"",
-    imagenAlt:"",
-    nombre:"",
-    precio: 0,
-    cantidad:0
-}]
+// Crea un ref para almacenar los datos
+const dataRef = ref<restaurantData>({
+    nombreCliente: "Nombre Cliente",
+    nombreRestaurante: "Nombre Restaurante",
+    idRestaurante: 0,
+    itemShopArray: defaultItemShopArray()
+});
 
-// getJsonData
-    if (dataJson) {
-        nombreCliente=dataJson.nombreCliente;
-        nombreRestaurante=dataJson.nombreRestaurante;
-        idRestaurante=dataJson.idRestaurante;
-        itemShopArray=dataJson.itemShopArray;
-        console.log(itemShopArray)
+// Asigna los datos de dataJson al ref
+
+if (dataJson) {
+    Object.assign(dataRef.value, dataJson);
+}
+
+// Recuperar Datos si se recargo la pagina por error
+const storedItemsSelected = localStorage.getItem('itemsSelected');
+let itemsSelected:ItemShop[]
+/* if (storedItemsSelected) {
+    itemsSelected = JSON.parse(storedItemsSelected);
+    // Ahora itemsSelected contiene los datos guardados en la caché
+} else {
+    itemsSelected = dataRef.value.itemShopArray
+    // inicializar los elementos en cantidad 0
+    itemsSelected.forEach(item => {
+        item.cantidad=0;
+    });
+}
+ */
+
+// comentar al terminar
+itemsSelected = dataRef.value.itemShopArray
+// inicializar los elementos en cantidad 0
+itemsSelected.forEach(item => {
+    item.cantidad=0;
+});
+
+const totalItemsMoney = ref(0);
+
+
+
+function calculateMoney() {
+    totalItemsMoney.value=0
+    itemsSelected.forEach(itemsSelected => {
+        totalItemsMoney.value += itemsSelected.precio * itemsSelected.cantidad
+    });
+}
+
+
+const addItem = (itemAdded:number) => {
+    
+    const itemFound = itemsSelected.find(item =>item.idItem === itemAdded)
+    if (itemFound) {
+        itemFound.cantidad++
     }
+    // console.log(itemFound?.cantidad)
+    calculateMoney()
+    saveShoppingItems()
+}
 
+const deleteItem = (itemAdded:number) => {
+    const itemFound = itemsSelected.find(item =>item.idItem === itemAdded)
+    if (itemFound) {
+        itemFound.cantidad--
+    }
+    // console.log(itemFound?.cantidad)
+    calculateMoney()
+    saveShoppingItems()
+}
+
+
+function saveShoppingItems() {
+    localStorage.setItem('itemsSelected',JSON.stringify(itemsSelected))
+}
+
+console.log(totalItemsMoney)
+console.log(itemsSelected);
 </script>
+
 
 <template>
     <header></header>
@@ -40,29 +99,31 @@ let itemShopArray=[{
     <!-- html content -->
 
     <MenuTemplate 
-    :nombre-cliente="nombreCliente"
-    :item-shop-array="itemShopArray"/>
+        :nombre-cliente="dataRef.nombreCliente"
+        :item-shop-array="dataRef.itemShopArray"
+        :item-valor="totalItemsMoney"
+        :addItem="addItem"
+        :deleteItem="deleteItem"
+    />
 
-    <ItemFullpageUser v-for="(item, index) in itemShopArray"
-    :key="index"
-    :imagen="item.imagen"
-    :descripcion="item.descripcion"
-    :imagen-alt="item.imagenAlt"
-    :nombre="item.nombre"
-    :precio="item.precio" />
+    <ItemFullpageUser v-for="(item, index) in dataRef.itemShopArray"
+        :-item-shop="item"
+        :add-item="addItem"
+        :delete-item="deleteItem"
+    />
 
-    <ShoppingListUser />
+    <ShoppingListUser 
+        :items="itemsSelected"
+        :nombre-cliente="dataRef.nombreCliente"
+        :add-item="addItem"
+        :delete-item="deleteItem"
+    />
+        
     </div>
 
 
 </template>
 
 <style scoped>
-/* css content */
 
-/* div {
-    max-width: 500px;
-    position:absolute;
-    
-} */
 </style>
