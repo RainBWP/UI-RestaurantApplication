@@ -29,19 +29,19 @@
         },
         {
             "idItem":4,
-            "nombre":"ObjetoNombre",
-            "imagen":"/imagesTest/hamburger.jpg",
-            "imagenAlt":"ImagenNombre",
-            "precio":0,
-            "descripcion":"Descipcion Test"
+            "nombre":"Frappewe",
+            "imagen":"/imagesTest/frapewe.JPEG",
+            "imagenAlt":"Imagen de un Freapewe",
+            "precio":7500,
+            "descripcion":"Un frape de chocolate con hielos y cafe, hecho con amor de la casa y para su degustacion"
         },
         {
             "idItem":5,
-            "nombre":"Hamburger",
-            "imagen":"/imagesTest/hamburger.jpg",
-            "imagenAlt":"Deliciosa Hamburguesa",
+            "nombre":"Enchiladas Verdes",
+            "imagen":"/imagesTest/enchiladasverdes.JPEG",
+            "imagenAlt":"Deliciosas Enchiladas Rojas",
             "precio":20000,
-            "descripcion":"XD"
+            "descripcion":"Enchiladas hechas con tortilla enchilada y pollo rojo"
         }
 ]
 }
