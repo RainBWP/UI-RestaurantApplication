@@ -1,0 +1,38 @@
+name: Build and Preview
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+        # Ver el cronograma de versiones admitidas de Node.js en https://nodejs.org/en/about/releases/
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build the project
+      run: npm run build --if-present
+
+    - name: Deploy
+      uses: RainBWP/UI-RestaurantApplication@808f7885578bc80789c13a2a4da535b03f7cf1ff
+      with:
+        folder: build
