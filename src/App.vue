@@ -10,6 +10,7 @@ import { ref } from "vue"
 import MenuTemplate from "./MenuTemplate.vue";
 import dataJson from "@/dataTest.json";
 import Registro from "./Registro.vue";
+import Notification from "@/components/notification.vue";
 
 import PantallaInicial from "./PantallaInicial.vue";
 
@@ -120,6 +121,8 @@ console.log(itemsSelected);
 <template>
     <div>
       <header></header>
+
+      
   
       <div>
         <MenuTemplate v-if="registroCompleto"

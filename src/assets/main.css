@@ -59,3 +59,36 @@ h2 {
 h3{
   font-size: 20px;
 }
+
+.container {
+  width: 500px;
+  max-width: 400px; /* Ancho máximo del contenedor */
+  margin: 0 auto; /* Centrar horizontalmente */
+}
+
+/* Estilos para el formulario */
+.form {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  background-color: var(--element-background);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: black; /* Color del texto de las etiquetas */
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 90%;
+  padding: 12px;
+  border: 3px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9; /* Color de fondo del campo de entrada */
+}

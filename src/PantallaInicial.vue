@@ -1,10 +1,26 @@
 <template>
   <div>
-    <h3 v-if="!registrado">{{ titulo }}</h3>
-    <div class="page-container" :class="{ 'hidden': registrado }">
+    <h1 v-if="!registrado">{{ titulo }}</h1>
+    <div class="container" :class="{ 'hidden': registrado }" v-if="!registrado">
+
+      <form @submit.prevent="iniciopantalla" class="form">
+        <div>
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" v-model="nombre" required>
+        </div>
+        <div>
+          <label for="correo">Correo Electrónico:</label>
+          <input type="email" id="correo" v-model="correo" required>
+        </div>
+        <div>
+          <label for="contrasena">Contraseña:</label>
+          <input type="password" id="contrasena" v-model="contrasena" required>
+        </div>
+      </form>
+
       <form @submit.prevent="iniciopantalla">
-        <button type="submit" @click="Registrar">Registrarse</button>
-        <button type="submit" @click="CrearCuenta">Crear cuenta</button>
+          <button type="submit" @click="Registrar">Iniciar Seccion</button>
+          <button type="submit" @click="CrearCuenta">Crear cuenta</button>
       </form>
     </div>
   </div>
@@ -12,25 +28,34 @@
 
 <script setup lang="ts">
 import { ref, defineProps, defineEmits } from 'vue';
+import Notification from "@/components/notification.vue";
+
+const nombre = ref('');
+const correo = ref('');
+const contrasena = ref('');
+const esCliente = ref(false);
+const esVendedor = ref(false);
+const nombreNegocio = ref('');
+const tipoVenta = ref('');
+
+
 
 const registrado = ref(false);
-const titulo = ref('INICIO')
+const titulo = ref('Iniciar Seccion')
 const emit = defineEmits(['crear', 'registrar']);   
 
 const Registrar = () => {
+    // send HTTPS user
     emit('registrar', true);
-    alert ('registro');
 };
 
 const CrearCuenta = () => {
     emit('crear', true);
-    alert ('hola');
 };
 
 const iniciopantalla = () => {
-  alert('registniugbro');
-    registrado.value = true;
-    titulo.value = '';
+  registrado.value = true;
+  titulo.value = '';
 };
 
 </script>
@@ -62,7 +87,7 @@ button[type="submit"]:hover {
   color: #fff;
 }
 
-h3 {
+h1 {
   text-align: center;
 }
 </style>
