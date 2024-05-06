@@ -1,17 +1,30 @@
+
+
 <script setup lang="ts">
-import { defineProps, withDefaults } from "vue";
+//import { defineProps, withDefaults, watch } from "vue";
 
 import { ref } from "vue"
 
+//import PayScreen from "./PayScreen.vue";
 
 import MenuTemplate from "./MenuTemplate.vue";
-import dataJson from "@/dataTest.json"
+import dataJson from "@/dataTest.json";
+import Registro from "./Registro.vue";
+
+import PantallaInicial from "./PantallaInicial.vue";
+
 
 import type { ItemShop, restaurantData } from './interfaces';
 import { defaultItemShopArray } from './interfaces';
 
+const registroCompleto = ref(false);
+//const crear = ref(false);
+//const registrar = ref(false);
+const accion = ref(false);
 
-// Crea un ref para almacenar los datos
+
+
+
 const dataRef = ref<restaurantData>({
     nombreCliente: "Nombre Cliente",
     nombreRestaurante: "Nombre Restaurante",
@@ -19,17 +32,32 @@ const dataRef = ref<restaurantData>({
     itemShopArray: defaultItemShopArray()
 });
 
-// Asigna los datos de dataJson al ref
+
+const handleRegistroCompleto = () => {
+    registroCompleto.value=true;
+};
+
+const accionCrear = () => {
+    accion.value = true;
+};
+
+const accionRegistrar = () => {
+    accion.value = false;
+};
+
+
+
+
+
 
 if (dataJson) {
     Object.assign(dataRef.value, dataJson);
 }
 
-// Recuperar Datos si se recargo la pagina por error
+
 const storedItemsSelected = localStorage.getItem('itemsSelected');
 let itemsSelected:ItemShop[]
 
-// calcular total de pedido
 const totalItemsMoney = ref(0);
 function calculateMoney() {
     totalItemsMoney.value=0
@@ -42,10 +70,10 @@ if (storedItemsSelected) {
     dataRef.value.itemShopArray = JSON.parse(storedItemsSelected);
     itemsSelected = dataRef.value.itemShopArray
     calculateMoney()
-    // Ahora itemsSelected contiene los datos guardados en la caché
+ 
 } else {
     itemsSelected = dataRef.value.itemShopArray
-    // inicializar los elementos en cantidad 0
+ 
     itemsSelected.forEach(item => {
         item.cantidad=0;
     });
@@ -53,12 +81,7 @@ if (storedItemsSelected) {
 }
 
 
-/* // comentar al terminar
-itemsSelected = dataRef.value.itemShopArray
-// inicializar los elementos en cantidad 0
-itemsSelected.forEach(item => {
-    item.cantidad=0;
-}); */
+
 
 const addItem = (itemAdded:number) => {
     
@@ -66,7 +89,7 @@ const addItem = (itemAdded:number) => {
     if (itemFound) {
         itemFound.cantidad++
     }
-    // console.log(itemFound?.cantidad)
+ 
     calculateMoney()
     saveShoppingItems()
 }
@@ -76,12 +99,10 @@ const deleteItem = (itemAdded:number) => {
     if (itemFound) {
         itemFound.cantidad--
     }
-    // console.log(itemFound?.cantidad)
+ 
     calculateMoney()
     saveShoppingItems()
 }
-
-
 
 
 function saveShoppingItems() {
@@ -90,51 +111,39 @@ function saveShoppingItems() {
 
 console.log(totalItemsMoney)
 console.log(itemsSelected);
+
+
+
 </script>
 
 
 <template>
-    <header></header>
-
     <div>
-    <!-- html content -->
+      <header></header>
+  
+      <div>
+        <MenuTemplate v-if="registroCompleto"
+          :nombre-cliente="dataRef.nombreCliente"
+          :item-shop-array="dataRef.itemShopArray"
+          :item-valor="totalItemsMoney"
+          :addItem="addItem"
+          :deleteItem="deleteItem"
+          :item-nest="itemsSelected"
+          :nombre-restaurante="dataRef.nombreRestaurante"
+        />
 
-    <MenuTemplate 
-        :nombre-cliente="dataRef.nombreCliente"
-        :item-shop-array="dataRef.itemShopArray"
-        :item-valor="totalItemsMoney"
-        :addItem="addItem"
-        :deleteItem="deleteItem"
-        :item-nest="itemsSelected"
-        :nombre-restaurante="dataRef.nombreRestaurante"
-    />
+        <PantallaInicial
+          v-else
+          @crear="accionCrear"
+          @registrar="accionRegistrar"
+        />
 
-
-    <!-- PayScreen 
-    :item-shops="itemsSelected"
-    :total-pagar="totalItemsMoney"
-    :show-pay-screen="showPayScreen"
-    /> -->
-
-
-    <!-- <ItemFullpageUser v-for="(item, index) in dataRef.itemShopArray"
-        :-item-shop="item"
-        :add-item="addItem"
-        :delete-item="deleteItem"
-    />
-
-    <ShoppingListUser 
-        :items="itemsSelected"
-        :nombre-cliente="dataRef.nombreCliente"
-        :add-item="addItem"
-        :delete-item="deleteItem"
-    /> -->
-        
-    </div>
-
-
+        <Registro v-if="!registroCompleto && accion" @registroCompleto="handleRegistroCompleto" />
+      </div>
+    </div> 
 </template>
 
 <style scoped>
 
 </style>
+
