@@ -3,10 +3,9 @@ import { defineProps, withDefaults } from "vue";
 
 import { ref } from "vue"
 
+import PayScreen from "./PayScreen.vue";
 
-import MenuTemplate  from "./MenuTemplate.vue";
-import ItemFullpageUser from "./components/ItemFullpageUser.vue"
-import ShoppingListUser from "./ShoppingList.vue";
+import MenuTemplate from "./MenuTemplate.vue";
 import dataJson from "@/dataTest.json"
 
 import type { ItemShop, restaurantData } from './interfaces';
@@ -84,6 +83,8 @@ const deleteItem = (itemAdded:number) => {
 }
 
 
+
+
 function saveShoppingItems() {
     localStorage.setItem('itemsSelected',JSON.stringify(itemsSelected))
 }
@@ -108,6 +109,14 @@ console.log(itemsSelected);
         :item-nest="itemsSelected"
         :nombre-restaurante="dataRef.nombreRestaurante"
     />
+
+
+    <!-- PayScreen 
+    :item-shops="itemsSelected"
+    :total-pagar="totalItemsMoney"
+    :show-pay-screen="showPayScreen"
+    /> -->
+
 
     <!-- <ItemFullpageUser v-for="(item, index) in dataRef.itemShopArray"
         :-item-shop="item"

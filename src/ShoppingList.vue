@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import ShoppingListItemModule from "./components/ShoppingListItem.vue";
+
+import PayScreen from "./PayScreen.vue";
 
 import type { ItemShop } from "./interfaces";
 import { defaultItemShopArray } from "./interfaces";
@@ -21,50 +24,52 @@ function estaVacia(shoppingList: ShoppingList): boolean {
     return !shoppingList || !shoppingList.items || shoppingList.items.length === 0;
 }
 
-const updatePrice = () => {
-    if (!estaVacia(shoppingListData)) {
-        var total= 0;
-        for (let index = 0; index < shoppingListData.items.length; index++) {
-            const element = shoppingListData.items[index];
-            
-            total = total+ element.precio*element.cantidad;
-        }
 
-        totalPrecio = total
-        }
+
+const showPayScreenVar = ref(false)
+const showPayScreen = () => {
+    showPayScreenVar.value = !showPayScreenVar.value
 }
-
-
 
 </script>
 
 <template>
-    <div class="ShopingText">
-        <h1>Carrito</h1>
-        <h2>{{ shoppingListData.nombreCliente }}</h2>
-    </div>
-    
-
-    <div class="ShopingGrid">
-        <ShoppingListItemModule 
-            v-for="(item, index) in shoppingListData.items" 
-            :key="index" 
-            :itemData="item" 
-            :addItem="addItem"
-            :deleteItem="deleteItem"
-        />
-    </div>
-
-    
-
-    <div class="shopingReady">
-        <div>
-            <h2>Total:</h2>
-            <h2>${{ (ItemValor/100).toFixed(2) }}</h2>
+    <div v-if="!showPayScreenVar">
+        <div class="ShopingText">
+            <h1>Carrito</h1>
+            <h2>{{ shoppingListData.nombreCliente }}</h2>
         </div>
-        <button>Proceder a la Compra</button>
-        <button @click="showCarrito()" class="regresar">Regresar</button>
+    
+
+        <div class="ShopingGrid">
+            <ShoppingListItemModule 
+                v-for="(item, index) in shoppingListData.items" 
+                :key="index" 
+                :itemData="item" 
+                :addItem="addItem"
+                :deleteItem="deleteItem"
+            />
+        </div>
+
+    
+
+        <div class="shopingReady">
+            <div>
+                <h2>Total:</h2>
+                <h2>${{ (ItemValor/100).toFixed(2) }}</h2>
+            </div>
+            <button @click="showPayScreen">Proceder a la Compra</button>
+            <button @click="showCarrito()" class="regresar">Regresar</button>
+        </div>
     </div>
+
+    <PayScreen
+    v-if="showPayScreenVar"
+    :itemShops="items"
+    :totalPagar="ItemValor"
+    :showPayScreen="showPayScreen"
+    />
+    
 </template>
 
 <style scoped>
