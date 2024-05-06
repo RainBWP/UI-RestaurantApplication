@@ -5,10 +5,6 @@
 
       <form @submit.prevent="iniciopantalla" class="form">
         <div>
-          <label for="nombre">Nombre:</label>
-          <input type="text" id="nombre" v-model="nombre" required>
-        </div>
-        <div>
           <label for="correo">Correo Electrónico:</label>
           <input type="email" id="correo" v-model="correo" required>
         </div>
