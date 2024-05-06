@@ -3,7 +3,6 @@ import { defineProps, withDefaults } from "vue";
 
 import { ref } from "vue"
 
-import PayScreen from "./PayScreen.vue";
 
 import MenuTemplate from "./MenuTemplate.vue";
 import dataJson from "@/dataTest.json"
