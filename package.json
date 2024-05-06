@@ -1,6 +1,7 @@
 {
-  "name": "vue-tests",
+  "name": "ui-restaurant-application",
   "version": "0.0.0",
+  "homepage": "https://rainbwp.github.io/UI-RestaurantApplication/",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,9 +9,11 @@
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
-    "type-check": "vue-tsc --build --force"
+    "type-check": "vue-tsc --build --force",
+    "github": "gh-pages -d dist"
   },
   "dependencies": {
+    "gh-pages": "^6.1.1",
     "vue": "^3.4.21",
     "vuex": "^4.1.0"
   },
