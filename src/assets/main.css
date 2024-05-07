@@ -83,12 +83,25 @@ label {
   font-weight: bold;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"] {
+input {
   width: 90%;
   padding: 12px;
   border: 3px solid #ccc;
   border-radius: 8px;
   background-color: #f9f9f9; /* Color de fondo del campo de entrada */
+}
+
+button {
+  box-shadow: 0px 4px 6px #0006;
+  border: none;
+  border-radius: .5vw;
+  margin: 10px; /* Agregamos un espacio entre los botones */
+  padding: 12px 20px;
+  background-color: var(--color-button-background);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+button[type="submit"]:hover {
+  background-color: var(--color-button-background-hover); /* Color de fondo del botón al pasar el cursor */
 }

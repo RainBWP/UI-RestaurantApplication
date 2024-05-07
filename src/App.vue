@@ -6,25 +6,17 @@
 import { ref } from "vue"
 
 //import PayScreen from "./PayScreen.vue";
-
 import MenuTemplate from "./MenuTemplate.vue";
 import dataJson from "@/dataTest.json";
 import Registro from "./Registro.vue";
 import Notification from "@/components/notification.vue";
-
 import PantallaInicial from "./PantallaInicial.vue";
-
-
 import type { ItemShop, restaurantData } from './interfaces';
 import { defaultItemShopArray } from './interfaces';
 
+
 const registroCompleto = ref(false);
-//const crear = ref(false);
-//const registrar = ref(false);
 const accion = ref(false);
-
-
-
 
 const dataRef = ref<restaurantData>({
     nombreCliente: "Nombre Cliente",
@@ -110,8 +102,8 @@ function saveShoppingItems() {
     localStorage.setItem('itemsSelected',JSON.stringify(itemsSelected))
 }
 
-console.log(totalItemsMoney)
-console.log(itemsSelected);
+// console.log(totalItemsMoney)
+// console.log(itemsSelected);
 
 
 
@@ -139,6 +131,7 @@ console.log(itemsSelected);
           v-else
           @crear="accionCrear"
           @registrar="accionRegistrar"
+          @registroCompleto="handleRegistroCompleto"
         />
 
         <Registro v-if="!registroCompleto && accion" @registroCompleto="handleRegistroCompleto" />

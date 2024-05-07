@@ -38,14 +38,13 @@
             <option value="restaurante">Restaurantes (FORMALES, COMIDAS COMPLETAS)</option>
           </select>
         </div>
-        <button type="submit">Registrarse como Vendedor</button>
       </form>
     </div>
 
-      <button type="submit">Registrarse</button>
+      <button type="submit" @click="submitData">Crear Cuenta</button>
+
     </form>
 
-    
   </div>
 </template>
 
@@ -58,7 +57,6 @@
   const nombre = ref('');
   const correo = ref('');
   const contrasena = ref('');
-  const esCliente = ref(false);
   const esVendedor = ref(false);
   const nombreNegocio = ref('');
   const tipoVenta = ref('');
@@ -66,27 +64,32 @@
   const emit = defineEmits(['registroCompleto']);
   //const router = useRouter(); // Obtén el router de Vue
   
+  const submitData = () => {
+    if (esVendedor) {
+      submitVendedorForm()
+    }else{
+      submitForm()
+    }
+  }
 
   const submitForm = () => {
-  if (nombre.value && correo.value && contrasena.value && esCliente.value ) {
+  if (nombre.value && correo.value && contrasena.value ) {
     
       // Si no es vendedor, emite el evento de registro completo
-      alert('Solo se marca cuando es cliente');
       //alert('registroCompleto');
       emit('registroCompleto', true);
-    
   } else {
-    alert('Por favor, complete todos los campos del formulario.');
+
   }
 };
 
+
 const submitVendedorForm = () => {
-  if (nombreNegocio.value && tipoVenta.value && nombre.value && correo.value && contrasena.value && esCliente.value) {
+  if (nombreNegocio.value && tipoVenta.value && nombre.value && correo.value && contrasena.value) {
     // Aquí debes enviar los datos del formulario de vendedor
     alert('Formulario de vendedor enviado correctamente');
     emit ('registroCompleto', true);
   } else {
-    alert('Por favor, complete todos los campos del formulario.');
   }
 };
 
@@ -115,20 +118,6 @@ h3 {
   margin-bottom: 10px; /* Margen inferior */
 }
 
-button[type="submit"] {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  background-color: var(--color-button-background); /* Color de fondo del botón */
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button[type="submit"]:hover {
-  background-color: var(--color-button-background-hover); /* Color de fondo del botón al pasar el cursor */
-}
 select {
   width: 100%;
   padding: 12px;

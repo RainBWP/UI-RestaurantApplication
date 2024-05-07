@@ -1,4 +1,5 @@
 <script setup lang="ts">
+    import { ref } from "vue";
     export interface Notification {
         /* 
             0 = No error
@@ -14,14 +15,30 @@
         stringCode: "Something Went Wrong... idk what it ts"
     })
 
-    let notificationType = 0
+
+    const errorcodestring = ref('')
+
+    switch (promps.errorCode) {
+        case 0:
+            errorcodestring.value = '➜'
+            break;
+        case 1:
+            errorcodestring.value = '✘'
+            break;
+        case 2:
+            errorcodestring.value = '✓'
+            break;
+    
+        default:
+            break;
+    }
     
 </script>
 
 <template>
     <div class="notification">
         <div>
-            <h2>{{ promps.errorCode }}</h2>
+            <h2>{{ errorcodestring }}</h2>
         </div>
         <div class="text">
             <h3>{{  promps.stringCode }}</h3>

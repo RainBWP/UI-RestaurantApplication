@@ -3,7 +3,7 @@
     <h1 v-if="!registrado">{{ titulo }}</h1>
     <div class="container" :class="{ 'hidden': registrado }" v-if="!registrado">
 
-      <form @submit.prevent="iniciopantalla" class="form">
+      <form class="form">
         <div>
           <label for="correo">Correo Electrónico:</label>
           <input type="email" id="correo" v-model="correo" required>
@@ -12,12 +12,23 @@
           <label for="contrasena">Contraseña:</label>
           <input type="password" id="contrasena" v-model="contrasena" required>
         </div>
+
+        <div>
+          <!-- Cambié el tipo de botón de 'submit' a 'button' -->
+          <button type="button" @click="Registrar">Iniciar Sesión</button>
+        </div>
+
+        <button type="button" @click="CrearCuenta">Crear cuenta</button>
+
+
       </form>
 
-      <form @submit.prevent="iniciopantalla">
-          <button type="submit" @click="Registrar">Iniciar Seccion</button>
-          <button type="submit" @click="CrearCuenta">Crear cuenta</button>
-      </form>
+  
+      <Notification 
+      v-if="show_notification"
+      :error-code="error_code"
+      :string-code="string_code" />
+
     </div>
   </div>
 </template>
@@ -26,27 +37,34 @@
 import { ref, defineProps, defineEmits } from 'vue';
 import Notification from "@/components/notification.vue";
 
-const nombre = ref('');
 const correo = ref('');
 const contrasena = ref('');
-const esCliente = ref(false);
-const esVendedor = ref(false);
-const nombreNegocio = ref('');
-const tipoVenta = ref('');
 
+const error_code = ref(0);
+const string_code = ref('')
+const show_notification = ref(false)
 
 
 const registrado = ref(false);
 const titulo = ref('Iniciar Seccion')
-const emit = defineEmits(['crear', 'registrar']);   
+const emit = defineEmits(['crear', 'registrar','registroCompleto']);   
 
 const Registrar = () => {
-    // send HTTPS user
-    emit('registrar', true);
+  console.log(correo.value.length)
+  if (correo.value.length > 0 && contrasena.value.length > 0) {
+    emit('registroCompleto', true);
+    
+  }else{
+    show_notification.value = true
+    error_code.value = 1
+    string_code.value = "Se Ingresaron Datos Erroneos"
+  }
 };
 
 const CrearCuenta = () => {
     emit('crear', true);
+    registrado.value = true
+    
 };
 
 const iniciopantalla = () => {
@@ -55,6 +73,7 @@ const iniciopantalla = () => {
 };
 
 </script>
+
 
 <style scoped>
 .page-container.hidden {
@@ -66,22 +85,10 @@ const iniciopantalla = () => {
   justify-content: center;
 }
 
-button[type="submit"] {
-  margin: 10px; /* Agregamos un espacio entre los botones */
-  padding: 12px 20px;
-  border: 2px solid #9b9811;
-  border-radius: 100px;
-  background-color: transparent;
-  color: #9b9811;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+button {
+width: 95%;
 }
 
-button[type="submit"]:hover {
-  background-color: #9b9811;
-  color: #fff;
-}
 
 h1 {
   text-align: center;
