@@ -20,6 +20,7 @@ export interface restaurantData {
   nombreCliente: string;
   idRestaurante: number;
   itemShopArray: ItemShop[];
+  itemRestaurantArray: restaurantShowing[];
 }
 
 export const defaultItemShopArray = (): ItemShop[] => [{
@@ -31,6 +32,7 @@ export const defaultItemShopArray = (): ItemShop[] => [{
   precio: 0,
   cantidad: 0
 }];
+
 
 export const defaultItemShop:ItemShop = {
   idItem: 0,
@@ -80,3 +82,22 @@ export interface registerRestaurant {
   
 }
 
+export interface restaurantShowing {
+  restaurant_name:string,
+  direccion: string,
+  restaurant_id:number,
+  get_restaurant:Function,
+  restaurant_logo?:string,
+}
+
+export interface restaurant_selector{
+  restaurant_array:restaurantShowing[]
+  get_restaurant:Function
+}
+
+export const defaultItemRestaurantArray = (): restaurantShowing[] => [{
+  restaurant_name: '',
+  direccion: '',
+  restaurant_id:0,
+  get_restaurant:(none:number)=>{console.error('you didnt see this')},
+}];
