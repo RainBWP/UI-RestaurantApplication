@@ -13,6 +13,7 @@
     "github": "gh-pages -d dist"
   },
   "dependencies": {
+    "axios": "^1.6.8",
     "gh-pages": "^6.1.1",
     "vue": "^3.4.21"
   },
