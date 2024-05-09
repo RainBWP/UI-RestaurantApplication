@@ -4,6 +4,7 @@
 //import { defineProps, withDefaults, watch } from "vue";
 
 import { ref } from "vue"
+import axios from 'axios';
 
 //import PayScreen from "./PayScreen.vue";
 import MenuTemplate from "@/MenuTemplate.vue";
@@ -44,29 +45,50 @@ const accionRegistrar = () => {
 
 // HTTP API borrar json
 
-const callHTTPInfo = () => {
+const callHTTPInfo = async () => {
     let user_name:string = dataRef.value.nombreCliente
     let restaurant_name:string = dataRef.value.nombreRestaurante
     let restaurant_id:number=dataRef.value.idRestaurante
     let itemShopArray:ItemShop[] = dataRef.value.itemShopArray
-    
-    if (dataJson) { // comentar cuando https sirva o guardarlo en el else
-        Object.assign(dataRef.value, dataJson);
 
-        user_name=dataJson.nombreCliente
-        restaurant_name= dataJson.nombreRestaurante
-        restaurant_id = dataJson.idRestaurante
-        itemShopArray = dataJson.itemShopArray
-    }
+    try {
+        if (dataJson) { // comentar cuando https sirva o guardarlo en el else
+            Object.assign(dataRef.value, dataJson);
 
-    // actualiza toda la informacion recibida
-    Object.assign(dataRef.value, {
+            user_name=dataJson.nombreCliente
+            restaurant_name= dataJson.nombreRestaurante
+            restaurant_id = dataJson.idRestaurante
+            //itemShopArray = dataJson.itemShopArray
+        }
+
+        // Obtiene los productos desde la base de datos
+        const response = await axios.get('http://localhost/AppVue/'); // Usar Axios para hacer la solicitud GET
+        console.log(response.data);
+        if (response.status === 200) {
+            const menuData = response.data; // Obtener los datos del menú de la respuesta
+            // Asignar los datos del menú al ref
+            dataRef.value.itemShopArray = menuData.map((item: any) => ({
+            idItem: item.id_menu,
+            nombre: item.nombre_producto,
+            imagen: item.imagen,
+            imagenAlt: 'Nada',
+            precio: (item.precio),
+            cantidad: 0 // Inicialmente la cantidad es cero
+            }));
+        } else {
+            console.error('Error al obtener datos del menú');
+        }
+
+        // actualiza toda la informacion recibida
+        Object.assign(dataRef.value, {
             nombreCliente: user_name, // en caso de no recibir algo
             nombreRestaurante: restaurant_name, // se pone el valor por defecto
             idRestaurante: restaurant_id, // ahora se mantiene fijado esto
-            itemShopArray: itemShopArray,
+            //itemShopArray: itemShopArray,
         })
-    
+    } catch (error) {
+        console.error('Error al obtener datos del Menú:', error);
+    }
 }
 
 callHTTPInfo() // comment this to stop getting json data
