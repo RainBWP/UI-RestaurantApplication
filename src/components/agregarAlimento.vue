@@ -49,7 +49,7 @@
 
                 axios.post('http://localhost/AppVue/', POST)
                     .then(response => {
-                        //console.log(response.data);
+                        console.log(response.data);
                         
                         if (response.data === 'success') {
                             console.log(POST)

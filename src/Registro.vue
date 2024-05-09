@@ -144,9 +144,9 @@ const submitVendedorForm = () => {
     .then(response => {
       if (response.data === 'success') {
         emit('registroCompleto', true);
-        alert('Registro de negocio exitoso');
+        //alert('Registro de negocio exitoso');
       } else {
-        alert('Error al registrar negocio. Por favor, inténtalo de nuevo.');
+        //alert('Error al registrar negocio. Por favor, inténtalo de nuevo.');
       }
     })
     .catch(error => {
@@ -168,20 +168,11 @@ const submitVendedorForm = () => {
   
 <style scoped>
 
-.eres {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
 
-.eres div {
-  display: flex;
-}
 
 
 
 h3 {
-  color: #435a18; /* Color del texto */
   font-size: 24px; /* Tamaño de la fuente */
   margin-bottom: 10px; /* Margen inferior */
 }

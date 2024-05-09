@@ -11,11 +11,9 @@
           <label for="contrasena">Contraseña:</label>
           <input type="password" id="contrasena" v-model="contrasena" required>
         </div>
-        <div>
-          <label for="cliente">Cliente:</label>
-          <input type="checkbox" id="cliente" v-model="esCliente" @change="checkboxChanged('cliente')">
-          <label for="vendedor">Vendedor:</label>
-          <input type="checkbox" id="vendedor" v-model="esVendedor" @change="checkboxChanged('vendedor')">
+        <div class="eres">
+          <label for="vendedor">Eres Vendedor:</label>
+          <input type="checkbox" id="vendedor" v-model="esVendedor">
         </div>
 
         <p class="error" v-if="theres_error"> {{ theres_error_string }}</p>
@@ -61,10 +59,10 @@ const titulo = ref('Iniciar Sesión')
 
 const emit = defineEmits(['crear', 'registrar','registroCompleto','is_restaurant']);   
 
-const checkboxChanged = (tipo) => {
-  if (tipo === 'cliente') {
+const checkboxChanged = (tipo:boolean) => { // true es 
+  if (tipo) {
     esVendedor.value = false;
-  } else if (tipo === 'vendedor') {
+  } else {
     esCliente.value = false;
   }
 };
@@ -72,18 +70,15 @@ const checkboxChanged = (tipo) => {
 const Registrar = () => {
   let usuario = '';
   if (correo.value.length > 0 && contrasena.value.length > 0) {
-    if (esCliente.value && !esVendedor.value) {
+    if (!esVendedor.value) {
       usuario = 'Cliente';
-    } else if (!esCliente.value && esVendedor.value) {
-      usuario = 'Vendedor';
     } else {
-      submit_error("Por favor, seleccione si es cliente o vendedor");
-      return;
+      usuario = 'Vendedor';
     }
 
     const variables_to_send = { // se empacan las variables a enviar para un uso facil
       tipo: "Login",
-      usuario: usuario,
+      usuario: usuario, // para acceder si es vendedor o cliente
       email: correo.value,
       password: contrasena.value
     }
@@ -144,6 +139,7 @@ const iniciopantalla = () => {
 
 
 <style scoped>
+
 .page-container.hidden {
   display: none;
 }
