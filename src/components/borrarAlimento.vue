@@ -1,6 +1,7 @@
 <script setup lang="ts">
     import { ref } from "vue";
     import { type ItemShop } from "../interfaces";
+    import axios from 'axios';
 
     interface promps {
         ReloadItemShopArray:Function
@@ -28,11 +29,24 @@
     const deleteNewItem = (isRestaunrat:boolean) => {
         // console.log(isRestaunrat)
         if (isRestaunrat) {
-            console.log(producto_id.value)
+            axios.delete("http://localhost/AppVue/?producto_id="+4) //producto_id equivale a id_menu en la tabla Menu, usar el id correspondiente en la tabla
+                    .then(response => {
+                        //console.log(response.data);
+                        
+                        if (response.data === 'success') {
+                            // cuando la peticion se envie con exito ejecutar esto
+                            sendDeletedSended()
+                            promps.ReloadItemShopArray()
+                        } else {
+                            alert('Error al borrar producto. Por favor, inténtalo de nuevo.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error al Borrar Producto. Por favor, inténtalo de nuevo.');
+                    });
 
-            // cuando la peticion se envie con exito ejecutar esto
-            sendDeletedSended()
-            promps.ReloadItemShopArray()
+            //.log(producto_id.value)
         }else{
             console.error('nah u wont')
         }
@@ -60,7 +74,7 @@
             <button @click="deleteNewItem(isRestaurant)">Proceder</button>
         </div>
         <div v-if="deletedSended">
-            <h2>Se ha enviado la peticion de borrado</h2>
+            <h2>Se ha eliminado el producto</h2>
             <button @click="HideMe()">Regresar</button>
         </div>
     </div>
