@@ -72,6 +72,7 @@ h3{
 
 /* Estilos para el formulario */
 .form {
+  margin-bottom: 15px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -106,8 +107,20 @@ button {
   cursor: pointer;
   transition: background-color 0.25s ease;
 }
-button[type="submit"]:hover {
+button:hover {
   background-color: var(--color-button-background-hover); /* Color de fondo del botón al pasar el cursor */
+}
+
+select {
+  box-shadow: 0px 4px 6px #0006;
+  border: none;
+  border-radius: .5vw;
+  margin: 10px; /* Agregamos un espacio entre los botones */
+  padding: 12px 20px;
+  background-color: var(--color-button-background);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
 }
 
 .error {
@@ -119,4 +132,17 @@ button[type="submit"]:hover {
   text-align: center;
   width: 90%;
   align-self: center;
+}
+
+.overview{
+  z-index: 20;
+  position: absolute;
+  padding: 20px;
+
+  border-radius: 3vw;
+  background-color: var(--element-background);
+
+  margin-bottom: 15px;
+
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }

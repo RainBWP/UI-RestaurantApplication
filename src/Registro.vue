@@ -84,6 +84,7 @@
 
 
   const submitForm = () => {
+
   if (nombre.value && correo.value && contrasena.value ) {
     if (esVendedor.value) {
       submitVendedorForm()
