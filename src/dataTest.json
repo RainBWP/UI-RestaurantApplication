@@ -4,52 +4,58 @@
     "idRestaurante":123456,
     "itemShopArray":[
         {
-            "idItem":1,
-            "nombre":"Hamburger",
-            "imagen":"/UI-RestaurantApplication/imagesTest/hamburger.jpg",
-            "imagenAlt":"Deliciosa Hamburguesa",
-            "precio":20000,
-            "descripcion":"Los Huevos de Pascua de San Anfreas, tienen la particularidad de ser Obscuros y muy simiestros"
-        },
-        {
-            "idItem":2,
-            "nombre" : "Owoburger",
-            "imagen" : "/UI-RestaurantApplication/imagesTest/owoburger.jpg",
-            "imagenAlt":"Una OwO Hamburguesa",
-            "precio":25000,
-            "descripcion":"Se me antoja una owoburger bien cabron hdlv, ya se tiene hambre"
-        },
-        {
-            "idItem":3,
-            "nombre":"Sandwich",
-            "imagen":"/UI-RestaurantApplication/imagesTest/samwich.JPG",
-            "imagenAlt":"Un Sandwich bien rico",
-            "precio":14000,
-            "descripcion":"Es un Sandwich bien mamon con un poco de todo, y bastante barato jsjs"
-        },
-        {
-            "idItem":4,
-            "nombre":"Frappewe",
-            "imagen":"/UI-RestaurantApplication/imagesTest/frapewe.JPEG",
-            "imagenAlt":"Imagen de un Freapewe",
-            "precio":7500,
-            "descripcion":"Un frape de chocolate con hielos y cafe, hecho con amor de la casa y para su degustacion"
-        },
-        {
-            "idItem":5,
-            "nombre":"Enchiladas Verdes",
-            "imagen":"/UI-RestaurantApplication/imagesTest/enchiladasverdes.JPEG",
-            "imagenAlt":"Deliciosas Enchiladas Rojas",
-            "precio":20000,
-            "descripcion":"Enchiladas hechas con tortilla enchilada y pollo rojo"
-        },
-        {
-            "idItem":6,
-            "nombre":"Jugo de Naranja",
-            "imagen":"/UI-RestaurantApplication/imagesTest/jugohd.jpeg",
-            "imagenAlt":"Delicioso Jugo",
-            "precio":20000,
-            "descripcion":"Delicioso Jugo de Naranja hecho con amor de mamá"
-        }
+            "idItem": 1,
+            "nombre": "Hamburger",
+            "imagen": "/UI-RestaurantApplication/imagesTest/hamburger.jpg",
+            "imagenAlt": "Deliciosa Hamburguesa",
+            "precio": 20000,
+            "descripcion": "Los Huevos de Pascua de San Anfreas, tienen la particularidad de ser Obscuros y muy simiestros",
+            "cantidad": 0
+          },
+          {
+            "idItem": 2,
+            "nombre": "Owoburger",
+            "imagen": "/UI-RestaurantApplication/imagesTest/owoburger.jpg",
+            "imagenAlt": "Una OwO Hamburguesa",
+            "precio": 25000,
+            "descripcion": "Se me antoja una owoburger bien cabron hdlv, ya se tiene hambre",
+            "cantidad": 0
+          },
+          {
+            "idItem": 3,
+            "nombre": "Sandwich",
+            "imagen": "/UI-RestaurantApplication/imagesTest/samwich.JPG",
+            "imagenAlt": "Un Sandwich bien rico",
+            "precio": 14000,
+            "descripcion": "Es un Sandwich bien mamon con un poco de todo, y bastante barato jsjs",
+            "cantidad": 0
+          },
+          {
+            "idItem": 4,
+            "nombre": "Frappewe",
+            "imagen": "/UI-RestaurantApplication/imagesTest/frapewe.JPEG",
+            "imagenAlt": "Imagen de un Freapewe",
+            "precio": 7500,
+            "descripcion": "Un frape de chocolate con hielos y cafe, hecho con amor de la casa y para su degustacion",
+            "cantidad": 0
+          },
+          {
+            "idItem": 5,
+            "nombre": "Enchiladas Verdes",
+            "imagen": "/UI-RestaurantApplication/imagesTest/enchiladasverdes.JPEG",
+            "imagenAlt": "Deliciosas Enchiladas Rojas",
+            "precio": 20000,
+            "descripcion": "Enchiladas hechas con tortilla enchilada y pollo rojo",
+            "cantidad": 0
+          },
+          {
+            "idItem": 6,
+            "nombre": "Jugo de Naranja",
+            "imagen": "/UI-RestaurantApplication/imagesTest/jugohd.jpeg",
+            "imagenAlt": "Delicioso Jugo",
+            "precio": 20000,
+            "descripcion": "Delicioso Jugo de Naranja hecho con amor de mamá",
+            "cantidad": 0
+          }
 ]
 }
