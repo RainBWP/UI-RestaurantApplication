@@ -98,6 +98,7 @@ input {
 
 button {
   box-shadow: 0px 4px 6px #0006;
+  color:var(--color-text);
   border: none;
   border-radius: .5vw;
   margin: 10px; /* Agregamos un espacio entre los botones */
