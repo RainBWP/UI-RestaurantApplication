@@ -9,7 +9,6 @@ import { ref } from "vue"
 import MenuTemplate from "./MenuTemplate.vue";
 import dataJson from "@/dataTest.json";
 import Registro from "./Registro.vue";
-import Notification from "@/components/notification.vue";
 import PantallaInicial from "./PantallaInicial.vue";
 import type { ItemShop, restaurantData } from './interfaces';
 import { defaultItemShopArray } from './interfaces';
