@@ -6,24 +6,30 @@
 import { ref } from "vue"
 
 //import PayScreen from "./PayScreen.vue";
-import MenuTemplate from "./MenuTemplate.vue";
+import MenuTemplate from "@/MenuTemplate.vue";
 import dataJson from "@/dataTest.json";
-import Registro from "./Registro.vue";
-import PantallaInicial from "./PantallaInicial.vue";
-import type { ItemShop, restaurantData } from './interfaces';
-import { defaultItemShopArray } from './interfaces';
-
-
+import Registro from "@/Registro.vue";
+import PantallaInicial from "@/PantallaInicial.vue";
+import SelectRestaurant from '@/SelectRestaurant.vue'
+import type { ItemShop, restaurantData, restaurantShowing } from '@/interfaces';
+import { defaultItemShopArray, defaultItemRestaurantArray } from '@/interfaces';
+// variables para saber si el registro fue completado con exito, mas no el login
 const registroCompleto = ref(false);
 const accion = ref(false);
 
+// interfaz de datos que se reciben
 const dataRef = ref<restaurantData>({
     nombreCliente: "Nombre Cliente",
     nombreRestaurante: "Nombre Restaurante",
     idRestaurante: 0,
-    itemShopArray: defaultItemShopArray()
+    itemShopArray: defaultItemShopArray(),
+    itemRestaurantArray: defaultItemRestaurantArray(),
 });
 
+
+
+
+// handles para emit
 const handleRegistroCompleto = () => {
     registroCompleto.value=true;
 };
@@ -36,11 +42,84 @@ const accionRegistrar = () => {
     accion.value = false;
 };
 
+// HTTP API borrar json
 
-if (dataJson) {
-    Object.assign(dataRef.value, dataJson);
+const callHTTPInfo = () => {
+    let user_name:string = dataRef.value.nombreCliente
+    let restaurant_name:string = dataRef.value.nombreRestaurante
+    let restaurant_id:number=dataRef.value.idRestaurante
+    let itemShopArray:ItemShop[] = dataRef.value.itemShopArray
+    
+    if (dataJson) { // comentar cuando https sirva o guardarlo en el else
+        Object.assign(dataRef.value, dataJson);
+
+        user_name=dataJson.nombreCliente
+        restaurant_name= dataJson.nombreRestaurante
+        restaurant_id = dataJson.idRestaurante
+        itemShopArray = dataJson.itemShopArray
+    }
+
+    // actualiza toda la informacion recibida
+    Object.assign(dataRef.value, {
+            nombreCliente: user_name, // en caso de no recibir algo
+            nombreRestaurante: restaurant_name, // se pone el valor por defecto
+            idRestaurante: restaurant_id, // ahora se mantiene fijado esto
+            itemShopArray: itemShopArray,
+        })
+    
 }
 
+callHTTPInfo() // comment this to stop getting json data
+
+
+function getUserInfo(user_email_function:string) { 
+    // user_email_function contiene para obtener el nombre del usuario
+
+    let user_name:string = dataRef.value.nombreCliente
+    // call user info
+
+    // put new info
+    dataRef.value.nombreCliente = user_name
+
+    return true // regresar si la operacion se realizo con exito
+}
+
+function getAllRestaurant() {
+    // NO SE ESPERA RECIBIR TODOS LOS MENUS DEL RESTAURANTE, SOLAMENTE INFORMACION DE NOMBRE Y DIRECCION Y OTRAS EN LA INTERFAZ
+    /* INTERFAZ DE restaurantShowing
+
+        export interface restaurantShowing {
+            restaurant_name:string,
+            direccion: string,
+            restaurant_id:number,
+            get_restaurant:Function,
+            restaurant_logo?:string,
+        }
+    
+    */
+    let db_restaurants_info:restaurantShowing[] = dataRef.value.itemRestaurantArray
+
+    // call restaurant important info
+
+    dataRef.value.itemRestaurantArray = db_restaurants_info
+
+    return true // regresar si la operacion se realizo con exito
+}
+
+function getRestaurantMenu(restaurant_id_function:number) {
+    // restaurant_id_function se usa para obtener por https el menu de cierto restaurante
+    let restaurnt_name:string = dataRef.value.nombreRestaurante
+    let restaurant_id:number = dataRef.value.idRestaurante
+    let restaurant_menu:ItemShop[] = dataRef.value.itemShopArray
+
+    // call restaurant menu info
+
+    dataRef.value.idRestaurante = restaurant_id
+    dataRef.value.nombreRestaurante = restaurnt_name
+    dataRef.value.itemShopArray = restaurant_menu
+    
+    return true // regresar si la operacion se realizo con exito
+}
 
 const storedItemsSelected = localStorage.getItem('itemsSelected');
 let itemsSelected:ItemShop[]
@@ -101,18 +180,31 @@ const acction_restaurant = () => {
     is_restaurant.value = true;
 };
 
+const restaurant_selected = ref(false)
+const get_restaurant = (id_restaurant:number) => { // obtener el restaurante seleccionado para llamar a buscar la informacion dentro del restaurante menu
+    const request_done = getRestaurantMenu(id_restaurant)
+    if (request_done) {
+        restaurant_selected.value = true
+    } else {
+        console.error('opsie, try again')
+    }
+}
+
 
 </script>
 
 
 <template>
     <div>
-      <header></header>
-
-      
   
       <div>
-        <MenuTemplate v-if="registroCompleto"
+
+        <SelectRestaurant v-if="registroCompleto && !restaurant_selected"
+        :restaurant_array="dataRef.itemRestaurantArray"
+        :get_restaurant="get_restaurant"
+        />
+
+        <MenuTemplate v-if="registroCompleto && restaurant_selected"
           :nombre-cliente="dataRef.nombreCliente"
           :item-shop-array="dataRef.itemShopArray"
           :item-valor="totalItemsMoney"
@@ -121,15 +213,18 @@ const acction_restaurant = () => {
           :item-nest="itemsSelected"
           :nombre-restaurante="dataRef.nombreRestaurante"
           :is-restaunrat="is_restaurant"
+          :recargar-item-shop-array="getRestaurantMenu"
     
         />
 
         <PantallaInicial
-          v-else
+          v-if="!registroCompleto"
           @crear="accionCrear"
           @registrar="accionRegistrar"
           @registroCompleto="handleRegistroCompleto"
           @is_restaurant="acction_restaurant"
+          :get-user-info="getUserInfo"
+          :is_restaurant="is_restaurant"
         />
 
         <Registro v-if="!registroCompleto && accion" @registroCompleto="handleRegistroCompleto" />
