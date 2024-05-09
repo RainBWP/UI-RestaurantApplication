@@ -1,6 +1,7 @@
 <script setup lang="ts">
     import { ref } from "vue";
     import { type ItemShop } from "../interfaces";
+    import axios from 'axios';
 
     interface promps {
         ReloadItemShopArray:Function
@@ -33,20 +34,41 @@
                 }
 
                 const POST = {
+                    tipo: "Producto",
                     producto_nombre: producto_nombre.value,
                     producto_descripcion: producto_descripcion.value,
                     producto_categoria: producto_categoria.value,
                     producto_precio: producto_precio.value,
-                    producto_imagen:producto_imagen.value
+                    producto_imagen:producto_imagen.value,
+                    id_negocio: 1 //El id dependerá del negocio, para pruebas se usa el valor estatico 1
                 };
 
                 
                 // HTTP API REQUEST
-                console.log(POST)
-                NewItemSended.value = true
+                //console.log(POST)
+
+                axios.post('http://localhost/AppVue/', POST)
+                    .then(response => {
+                        //console.log(response.data);
+                        
+                        if (response.data === 'success') {
+                            console.log(POST)
+                            NewItemSended.value = true
+                            //emit('registroCompleto', true);
+                            //alert('Registro de producto exitoso');
+                        } else {
+                            alert('Error al registrar producto. Por favor, inténtalo de nuevo.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error al Registrar Producto. Por favor, inténtalo de nuevo.');
+                    });
+
+                //NewItemSended.value = true
                 
             } else {
-                console.error('Por favor, llene todos los campos excepto la imagen');
+                alert('Todos los campos con * son obligatorios');
             }
 
 
@@ -67,7 +89,7 @@
                 <input type="text" id="product_name" v-model="producto_nombre" required/>
 
                 <label for="description">*Descripción del Producto</label>
-                <input type="text" id="description" v-model="producto_descripcion"/>
+                <input type="text" id="description" v-model="producto_descripcion" required/>
 
                 <label for="precio">*Precio del Producto</label>
                 <input type="number" id="precio" v-model="producto_precio" required/>
