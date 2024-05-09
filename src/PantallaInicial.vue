@@ -2,8 +2,7 @@
   <div>
     <h1 v-if="!registrado">{{ titulo }}</h1>
     <div class="container" :class="{ 'hidden': registrado }" v-if="!registrado">
-
-      <form class="form">
+      <form class="form" @submit.prevent="Registrar">
         <div>
           <label for="correo">Correo Electrónico:</label>
           <input type="email" id="correo" v-model="correo" required>
@@ -20,10 +19,16 @@
           <button type="button" @click="Registrar">Iniciar Sesión</button>
         </div>
 
-        <button type="button" @click="CrearCuenta">Crear cuenta</button>
+        
 
 
       </form>
+
+      <div class="form">
+        <h2 style="text-align: center;">No tienes cuenta? Crea una!!!</h2>
+        <button type="button" @click="CrearCuenta">Crear cuenta</button>
+
+      </div>
 
 
     </div>
@@ -33,6 +38,11 @@
 <script setup lang="ts">
 import { ref, defineProps, defineEmits, type Ref } from 'vue';
 
+interface promps {
+  getUserInfo:Function,
+  is_restaurant:boolean,
+}
+const promps = defineProps<promps>();
 
 
 const correo = ref('');
@@ -54,12 +64,14 @@ const Registrar = () => {
 
     // comment this if, only to test propuses
     if (correo.value === 'a@a.a'){
+
       emit('is_restaurant',true)
       // open restaurant extra UI
     }
 
 
     emit('registroCompleto', true);
+    promps.getUserInfo(correo.value) // llamamos a la funcion de obtener datos de user
     
   }else{
     submit_error("Se Ingresaron Datos Erroneos");
