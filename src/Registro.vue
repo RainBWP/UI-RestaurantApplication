@@ -31,11 +31,11 @@
         </div>
         <div>
          <label for="direccion">Direccion del Negocio</label>
-         <input type="text" name="direccion" id="direccion">
+         <input type="text" id="direccion" v-model="direccionNegocio" required>
         </div>
         <div>
          <label for="rfc">RFC</label>
-         <input type="text" name="rfc" id="rfc" maxlength="15">
+         <input type="text" id="rfc" v-model="rfc" required maxlength="15">
         </div>
       </form>
     </div>
@@ -53,6 +53,7 @@
   import Notification from "@/components/notification.vue";
   import { readConfigFile } from "typescript";
   import { ref, defineProps, defineEmits } from 'vue';
+  import axios from 'axios';
   //import { useRouter } from 'vue-router'; // Importa useRouter de Vue Router
 
   const nombre = ref('');
@@ -92,15 +93,28 @@
       cancel_error()
 
       const variables_to_send = { // se empacan las variables a enviar para un uso facil
+        tipo: "Cliente",
         nombre:nombre.value,
         correo:correo.value,
         contrasena:contrasena.value
       }
 
       // HTTP API
+      axios.post('http://localhost/AppVue/', variables_to_send)
+      .then(response => {
+        if (response.data === 'success') {
+          emit('registroCompleto', true);
+          alert('Registro de cliente exitoso');
+        } else {
+          alert('Error al registrar cliente. Por favor, inténtalo de nuevo.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error al Registrar Cliente. Por favor, inténtalo de nuevo.');
+      });
 
-
-      emit('registroCompleto', true);
+      //emit('registroCompleto', true);
     }
 
     }else {
@@ -115,6 +129,7 @@ const submitVendedorForm = () => {
     cancel_error()
 
     const variables_to_send = { // se empacan las variables a enviar para un uso facil
+      tipo: "Negocio",
       nombre_propietario: nombre.value,
       nombre_negicio: nombreNegocio.value,
       correo: correo.value,
@@ -125,9 +140,22 @@ const submitVendedorForm = () => {
 
 
     // HTTP API
+    axios.post('http://localhost/AppVue/', variables_to_send)
+    .then(response => {
+      if (response.data === 'success') {
+        emit('registroCompleto', true);
+        alert('Registro de negocio exitoso');
+      } else {
+        alert('Error al registrar negocio. Por favor, inténtalo de nuevo.');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Error al Registrar Negocio. Por favor, inténtalo de nuevo.');
+    });
 
 
-    emit ('registroCompleto', true);
+    //emit ('registroCompleto', true);
   } else {
     submit_error('No se introdujeron todos los datos') 
   }
