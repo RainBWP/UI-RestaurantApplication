@@ -11,6 +11,12 @@
           <label for="contrasena">Contraseña:</label>
           <input type="password" id="contrasena" v-model="contrasena" required>
         </div>
+        <div>
+          <label for="cliente">Cliente:</label>
+          <input type="checkbox" id="cliente" v-model="esCliente" @change="checkboxChanged('cliente')">
+          <label for="vendedor">Vendedor:</label>
+          <input type="checkbox" id="vendedor" v-model="esVendedor" @change="checkboxChanged('vendedor')">
+        </div>
 
         <p class="error" v-if="theres_error"> {{ theres_error_string }}</p>
 
@@ -37,6 +43,7 @@
 
 <script setup lang="ts">
 import { ref, defineProps, defineEmits, type Ref } from 'vue';
+import axios from 'axios';
 
 interface promps {
   getUserInfo:Function,
@@ -47,34 +54,61 @@ const promps = defineProps<promps>();
 
 const correo = ref('');
 const contrasena = ref('');
+const esCliente = ref(false);
+const esVendedor = ref(false);
 const registrado = ref(false);
-const titulo = ref('Iniciar Seccion')
+const titulo = ref('Iniciar Sesión')
 
 const emit = defineEmits(['crear', 'registrar','registroCompleto','is_restaurant']);   
 
+const checkboxChanged = (tipo) => {
+  if (tipo === 'cliente') {
+    esVendedor.value = false;
+  } else if (tipo === 'vendedor') {
+    esCliente.value = false;
+  }
+};
+
 const Registrar = () => {
+  let usuario = '';
   if (correo.value.length > 0 && contrasena.value.length > 0) {
+    if (esCliente.value && !esVendedor.value) {
+      usuario = 'Cliente';
+    } else if (!esCliente.value && esVendedor.value) {
+      usuario = 'Vendedor';
+    } else {
+      submit_error("Por favor, seleccione si es cliente o vendedor");
+      return;
+    }
 
     const variables_to_send = { // se empacan las variables a enviar para un uso facil
-      correo: correo.value,
-      contrasena: contrasena.value
+      tipo: "Login",
+      usuario: usuario,
+      email: correo.value,
+      password: contrasena.value
     }
 
-    // PUT HTTP API
-
-    // comment this if, only to test propuses
-    if (correo.value === 'a@a.a'){
-
-      emit('is_restaurant',true)
-      // open restaurant extra UI
-    }
-
-
-    emit('registroCompleto', true);
-    promps.getUserInfo(correo.value) // llamamos a la funcion de obtener datos de user
-    
+    // POST HTTP API
+    axios.post('http://localhost/AppVue/', variables_to_send)
+    .then(response => {
+      if (response.data === 'success') {
+        alert('Inicio de sesión exitoso');
+        //Condicional para que, dependiendo de si es cliente o vendedor, lo redirija a su respectiva pantalla
+        if(usuario === 'Vendedor') {
+          emit('is_restaurant',true)
+        }
+        emit('registroCompleto', true);
+        promps.getUserInfo(correo.value) // llamamos a la funcion de obtener datos de user
+      } else {
+        submit_error("Correo electrónico o contraseña incorrectos");
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      submit_error("Error al conectar con el servidor");
+    });
   }else{
-    submit_error("Se Ingresaron Datos Erroneos");
+    submit_error("Por favor, complete todos los campos");
   }
 };
 
