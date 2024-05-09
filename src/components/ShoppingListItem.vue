@@ -41,9 +41,8 @@ const data = defineProps<ShoppingData>()
 
 <style scoped>
     .itemHolder {
-        height: 25vw;
+        height: min(200px,25vw); /* Ajusta este valor según tus necesidades */
         overflow: hidden;
-
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -58,45 +57,43 @@ const data = defineProps<ShoppingData>()
     .headerImagen{
         margin: 0%;
         position: relative;
-        width: 25vw;
+        width: min(200px,25vw); /* Ajusta este valor según tus necesidades */
         overflow: hidden;
-        height: 25vw;
-        border-radius: 1vw;
+        height: min(200px,25vw); /* Ajusta este valor según tus necesidades */
+        border-radius: 10px; /* Ajusta este valor según tus necesidades */
     }
 
     .headerImagen img {
-        position: absolute; /* Establecer posición absoluta para posicionar la imagen dentro del contenedor */
-        top: 50%; /* Centrar verticalmente la imagen */
-        left: 50%; /* Centrar horizontalmente la imagen */
-        transform: translate(-50%, -50%); /* Centrar la imagen completamente */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         max-width: 100%; 
     }
     .itemText{
-        margin-left: 3vw;
+        margin-left: 30px; /* Ajusta este valor según tus necesidades */
     }
     b{
         margin: 0;
-        font-size: 5vw;
+        font-size: min(40px,4vw); /* Ajusta este valor según tus necesidades */
     }
     p {
-        font-size: 3vw;
+        font-size: min(24px,2.4vw); /* Ajusta este valor según tus necesidades */
     }
     h2 {
-        font-size: 6vw;
+        font-size: min(48px,4.8vw); /* Ajusta este valor según tus necesidades */
     }
 
     button {
-        width: 6.5vw;
-        height: 6.5vw;
+        width: min(35px,.5vw); /* Ajusta este valor según tus necesidades */
+        height: min(65px,1vw); /* Ajusta este valor según tus necesidades */
         background-color: var(--color-button-background);
         border-radius: 5px;
-        margin: 5px;
+        margin: min(5px,.5vw);
         overflow: hidden;
         border: none;
-
-        font-size: 5vw;
+        font-size: min(40px,4vw); /* Ajusta este valor según tus necesidades */
         text-align: center;
-        
         color: var(--color-text)
     }
 </style>

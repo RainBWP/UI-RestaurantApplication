@@ -34,7 +34,8 @@ const showPayScreen = () => {
 </script>
 
 <template>
-    <div v-if="!showPayScreenVar">
+    <div class="shopDisplay">
+        <div v-if="!showPayScreenVar">
         <div class="ShopingText">
             <h1>Carrito</h1>
             <h2>{{ shoppingListData.nombreCliente }}</h2>
@@ -69,6 +70,8 @@ const showPayScreen = () => {
     :totalPagar="ItemValor"
     :showPayScreen="showPayScreen"
     />
+    </div>
+    
     
 </template>
 
@@ -106,6 +109,9 @@ const showPayScreen = () => {
         margin-bottom: 5vw;
         margin-top: 0;
 
+    }
+    .shopDisplay{
+        /* width: 50%; */
     }
 
     button {
