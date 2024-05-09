@@ -7,6 +7,9 @@ import ShoppingList from './ShoppingList.vue';
 import { defaultItemShop } from './interfaces';
 import ItemFullpageUser from './components/ItemFullpageUser.vue';
 
+import AgregarAlimentoUI from '@/components/agregarAlimento.vue';
+import borrarAlimentoUI from './components/borrarAlimento.vue';
+
 // imports and that things
 export interface Props {
   itemValor: number,
@@ -16,7 +19,8 @@ export interface Props {
   deleteItem: Function,
   itemNest: Array<ItemShop>,
   nombreRestaurante: string,
-  isRestaunrat:boolean
+  isRestaunrat:boolean,
+  recargarItemShopArray:Function
   
 
 }
@@ -57,22 +61,59 @@ function checkShow() {
   console.log(showFullScreenVar.value || showCarritoVar.value)
 }
 
+const ShowAgregarUI = ref(false)
+const HideAgregar = () =>{
+  ShowAgregarUI.value = false
+}
+const ShowAgregar = () =>{
+  ShowAgregarUI.value = true
+  if (ShowBorrarUI.value) {
+    ShowBorrarUI.value = false
+  }
+}
+
+const ShowBorrarUI = ref(false)
+const HideBorrar = () =>{
+  ShowBorrarUI.value = false
+  
+}
+const ShowBorrar = () =>{
+  ShowBorrarUI.value = true
+  if (ShowAgregarUI.value) {
+    ShowAgregarUI.value = false
+  }
+}
+
 </script>
 
 <template>
 <!-- html content -->
 
+  <div class="template">
+    
   <div v-if="canIShow">
-      <h1>Menu</h1>
-      <h3>{{nombreRestaurante }}</h3>
+    <h1>Menu</h1>
+    <h3>{{nombreRestaurante }}</h3>
     <div class="importantItems">
       <h2>Total: ${{ (itemValor/100).toFixed(2) }}</h2>
       <h2 class="clientName">{{ nombreCliente }}</h2>
     </div>
 
     <div v-if="isRestaunrat" class="importantItems">
-      <button>Agregar Alimento</button>
-      <button>Borrar Alimento</button>
+      <button @click="ShowAgregar">Agregar Alimento</button>
+      <button @click="ShowBorrar">Borrar Alimento</button>
+
+      <AgregarAlimentoUI v-if="ShowAgregarUI"
+      :-reload-item-shop-array="recargarItemShopArray"
+      :-hide-me="HideAgregar"
+      :is-restaurant="isRestaunrat"
+      />
+      <borrarAlimentoUI v-if="ShowBorrarUI"
+      :-reload-item-shop-array="recargarItemShopArray"
+      :-hide-me="HideBorrar"
+      :is-restaurant="isRestaunrat"
+      :item-shop-array="itemShopArray"/>
+
     </div>
 
     <div class="itemContainer">
@@ -108,15 +149,19 @@ function checkShow() {
   :showCarrito="showCarrito"
   :-item-valor="itemValor"
   />
+  </div>
+
 
   
 </template>
 
 <style scoped>
 /* css content */
-  template {
+  .template {
     max-width: 100%;
-    overflow-x: hidden
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
   }
   .itemContainer {
     display: grid;
