@@ -10,7 +10,7 @@
 
 <style scoped>
     .pagoScreen {
-        width: 90%;
+        width: min(400px,90vw);
         position: absolute;
         top: 50%;
         left: 50%;
@@ -20,7 +20,7 @@
         text-align: center;
         padding: 5%;
         box-shadow: 10px 10px 10px #0005;
-        border-radius: 5vw;
+        border-radius: min(20px,5vw);
         background-color: var(--color-text-element-background);
         }
 

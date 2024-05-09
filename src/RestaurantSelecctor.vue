@@ -13,7 +13,7 @@ const promps = defineProps<restaurantShowing>()
 
     <div class="thisThing">
       <div >
-        <img :src="restaurant_logo || '/UI-RestaurantApplication/src/assets/logo.svg'" alt="Logo">
+        <img :src="restaurant_logo || '/UI-RestaurantApplication/logo.svg'" alt="Logo">
       </div>
       <div>
         <h2>{{ restaurant_name }}</h2>
@@ -40,7 +40,7 @@ const promps = defineProps<restaurantShowing>()
   margin: min(20px,6vw);
   padding: 7vw;
   width: min(400px,80%);
-  border-radius: 3vw;
+  border-radius: min(3vw,20px);
 }
 .thisThing {
   display: flex;

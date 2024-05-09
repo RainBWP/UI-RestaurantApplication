@@ -63,26 +63,17 @@
         align-items: center;
         flex-direction: column;
 
-        border-radius: 5vw;
+        border-radius: min(20px,2vw);
 
         background-color: var(--color-text-element-background)
     }
 
     button {
-        background-color: var(--color-button-background);
-        border-radius: 2vw;
-        padding: 2%;
-        overflow: hidden;
-        border: none;
+
         box-shadow:  0px 0px 10px #000000; 
         width: 100%;
-        font-size: 2.5vh;
-        color: var(--color-text);
-        margin-top: 10px;
 
     }
-    button:hover {
-        background-color: var(--color-button-background-hover);
-    }
+
 
 </style>

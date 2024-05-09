@@ -139,7 +139,7 @@ select {
   position: absolute;
   padding: 20px;
 
-  border-radius: 3vw;
+  border-radius: 10px;
   background-color: var(--element-background);
 
   margin-bottom: 15px;

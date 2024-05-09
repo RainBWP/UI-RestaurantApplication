@@ -73,7 +73,6 @@
         position: absolute;
         padding: 20px;
 
-        border-radius: 3vw;
         background-color: var(--element-background);
 
         

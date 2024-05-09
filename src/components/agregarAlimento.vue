@@ -95,16 +95,5 @@
     </div>
 </template>
 
-<style>
-    .overview{
-        text-align: center;
-        z-index: 20;
-        position: absolute;
-        padding: 20px;
-
-        border-radius: 3vw;
-        background-color: var(--element-background);
-
-        
-    }
+<style scoped>
 </style>

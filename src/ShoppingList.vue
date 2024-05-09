@@ -99,7 +99,7 @@ const showPayScreen = () => {
     .shopingReady{
         padding: 5%;
 
-        border-radius: 5vw;
+        border-radius: min(5vw,50px);
 
         background-color: var(--color-text-element-background)
     }
@@ -124,14 +124,14 @@ const showPayScreen = () => {
         box-shadow:  0px 0px 10px #000000; 
         margin: 20px;
 
-        font-size: 5vw;
+        font-size: min(50px,5vw);
         font-weight: bold;
         color: var(--color-text);
         margin-left: 0;
         margin-right: 0%;
     }
     .regresar{
-        font-size: 3vw;
+        font-size: min(30px,3vw);
     }
 
     button:hover {
