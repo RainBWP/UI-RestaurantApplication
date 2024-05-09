@@ -23,6 +23,8 @@ body{
   --apt-button-background-hover: #fffeed;
   --apt-button-secundary:#FAF1C0;
 
+  --apt-element-background-error:#e68383;
+
 }
 
 :root {
@@ -37,6 +39,8 @@ body{
   --color-button-background:var(--apt-button-background);
   --color-button-background-hover:var(--apt-button-background-hover);
   --color-button-secundary:var(--apt-button-secundary);
+
+  --color-background-error:var(var(--apt-element-background-error))
 
 }
   
@@ -104,4 +108,15 @@ button {
 }
 button[type="submit"]:hover {
   background-color: var(--color-button-background-hover); /* Color de fondo del botón al pasar el cursor */
+}
+
+.error {
+  transition: all 0.25s;
+  border-radius: 0.5vw;
+  padding: 10px;
+  background-color: var(--apt-element-background-error);
+  font-weight: bolder;
+  text-align: center;
+  width: 90%;
+  align-self: center;
 }

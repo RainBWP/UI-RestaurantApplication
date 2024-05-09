@@ -23,25 +23,25 @@
 
       <div v-if="esVendedor">
       <h2>REGISTRO PARA VENDEDORES</h2>
-      <form @submit.prevent="submitVendedorForm">
+      <form @submit.prevent="submitForm">
         <!-- Campos del formulario de vendedor -->
         <div>
           <label for="nombreNegocio">Nombre del Negocio:</label>
           <input type="text" id="nombreNegocio" v-model="nombreNegocio" required>
         </div>
         <div>
-          <label for="tipoVenta">Tipo de Venta:</label>
-          <select id="tipoVenta" v-model="tipoVenta" required>
-            <option value="">Seleccione el tipo de venta</option>
-            <option value="comodarapida">Comida rápida (TACOS, TORTAS, TAMALES, HAMBURGUESAS, etc)</option>
-            <option value="comedor">Comida corrida (GUISOS, etc)</option>
-            <option value="restaurante">Restaurantes (FORMALES, COMIDAS COMPLETAS)</option>
-          </select>
+         <label for="direccion">Direccion del Negocio</label>
+         <input type="text" name="direccion" id="direccion">
+        </div>
+        <div>
+         <label for="rfc">RFC</label>
+         <input type="text" name="rfc" id="rfc" maxlength="15">
         </div>
       </form>
     </div>
 
-      <button type="submit" @click="submitData">Crear Cuenta</button>
+      <p class="error" v-if="theres_error">{{ theres_error_string }}</p>
+      <button type="submit">Crear Cuenta</button>
 
     </form>
 
@@ -49,8 +49,9 @@
 </template>
 
   
-  <script setup lang="ts">
+<script setup lang="ts">
   import Notification from "@/components/notification.vue";
+  import { readConfigFile } from "typescript";
   import { ref, defineProps, defineEmits } from 'vue';
   //import { useRouter } from 'vue-router'; // Importa useRouter de Vue Router
 
@@ -59,37 +60,75 @@
   const contrasena = ref('');
   const esVendedor = ref(false);
   const nombreNegocio = ref('');
-  const tipoVenta = ref('');
+  const direccionNegocio = ref('');
+  const rfc = ref('');
   
   const emit = defineEmits(['registroCompleto']);
-  //const router = useRouter(); // Obtén el router de Vue
-  
-  const submitData = () => {
-    if (esVendedor) {
-      submitVendedorForm()
-    }else{
-      submitForm()
+
+
+  const theres_error = ref(false);
+  const theres_error_string = ref('');
+
+  const submit_error = (error_msg:string) => {
+    theres_error.value = true
+    if (error_msg.length>0) {
+      theres_error_string.value = error_msg
+    }else {
+      theres_error_string.value = 'Something Went Wrong'
     }
   }
 
+  const cancel_error = () => {
+    theres_error.value = false
+  }
+
+
   const submitForm = () => {
   if (nombre.value && correo.value && contrasena.value ) {
-    
-      // Si no es vendedor, emite el evento de registro completo
-      //alert('registroCompleto');
-      emit('registroCompleto', true);
-  } else {
+    if (esVendedor.value) {
+      submitVendedorForm()
+    } else {
+      cancel_error()
 
-  }
-};
+      const variables_to_send = { // se empacan las variables a enviar para un uso facil
+        nombre:nombre.value,
+        correo:correo.value,
+        contrasena:contrasena.value
+      }
+
+      // HTTP API
+
+
+      emit('registroCompleto', true);
+    }
+
+    }else {
+      submit_error('No se introdujeron todos los datos')
+    }
+  };
 
 
 const submitVendedorForm = () => {
-  if (nombreNegocio.value && tipoVenta.value && nombre.value && correo.value && contrasena.value) {
+  if (nombreNegocio.value && direccionNegocio.value && nombre.value && correo.value && contrasena.value && rfc.value) {
     // Aquí debes enviar los datos del formulario de vendedor
-    alert('Formulario de vendedor enviado correctamente');
+    cancel_error()
+
+    const variables_to_send = { // se empacan las variables a enviar para un uso facil
+      nombre_propietario: nombre.value,
+      nombre_negicio: nombreNegocio.value,
+      correo: correo.value,
+      contrasena: contrasena.value,
+      direccion: direccionNegocio.value,
+      rfc:rfc.value
+    }
+
+
+    // HTTP API
+
+
     emit ('registroCompleto', true);
   } else {
+    submit_error('No se introdujeron todos los datos') 
   }
 };
 

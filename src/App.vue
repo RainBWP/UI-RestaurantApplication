@@ -25,7 +25,6 @@ const dataRef = ref<restaurantData>({
     itemShopArray: defaultItemShopArray()
 });
 
-
 const handleRegistroCompleto = () => {
     registroCompleto.value=true;
 };
@@ -37,10 +36,6 @@ const accionCrear = () => {
 const accionRegistrar = () => {
     accion.value = false;
 };
-
-
-
-
 
 
 if (dataJson) {
@@ -102,9 +97,10 @@ function saveShoppingItems() {
     localStorage.setItem('itemsSelected',JSON.stringify(itemsSelected))
 }
 
-// console.log(totalItemsMoney)
-// console.log(itemsSelected);
-
+const is_restaurant = ref(false)
+const acction_restaurant = () => {
+    is_restaurant.value = true;
+};
 
 
 </script>
@@ -125,6 +121,8 @@ function saveShoppingItems() {
           :deleteItem="deleteItem"
           :item-nest="itemsSelected"
           :nombre-restaurante="dataRef.nombreRestaurante"
+          :is-restaunrat="is_restaurant"
+    
         />
 
         <PantallaInicial
@@ -132,6 +130,7 @@ function saveShoppingItems() {
           @crear="accionCrear"
           @registrar="accionRegistrar"
           @registroCompleto="handleRegistroCompleto"
+          @is_restaurant="acction_restaurant"
         />
 
         <Registro v-if="!registroCompleto && accion" @registroCompleto="handleRegistroCompleto" />

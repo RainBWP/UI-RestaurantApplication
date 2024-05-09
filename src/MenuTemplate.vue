@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ItemContainerUser from './components/ItemContainerUser.vue';
-import { ref } from 'vue';
+import { ref, type Ref } from 'vue';
 
 import { type ItemShop, defaultItemShopArray} from './interfaces'
 import ShoppingList from './ShoppingList.vue';
@@ -16,6 +16,7 @@ export interface Props {
   deleteItem: Function,
   itemNest: Array<ItemShop>,
   nombreRestaurante: string,
+  isRestaunrat:boolean
   
 
 }
@@ -67,6 +68,11 @@ function checkShow() {
     <div class="importantItems">
       <h2>Total: ${{ (itemValor/100).toFixed(2) }}</h2>
       <h2 class="clientName">{{ nombreCliente }}</h2>
+    </div>
+
+    <div v-if="isRestaunrat" class="importantItems">
+      <button>Agregar Alimento</button>
+      <button>Borrar Alimento</button>
     </div>
 
     <div class="itemContainer">

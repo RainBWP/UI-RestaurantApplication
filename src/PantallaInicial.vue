@@ -13,6 +13,8 @@
           <input type="password" id="contrasena" v-model="contrasena" required>
         </div>
 
+        <p class="error" v-if="theres_error"> {{ theres_error_string }}</p>
+
         <div>
           <!-- Cambié el tipo de botón de 'submit' a 'button' -->
           <button type="button" @click="Registrar">Iniciar Sesión</button>
@@ -23,41 +25,44 @@
 
       </form>
 
-  
-      <Notification 
-      v-if="show_notification"
-      :error-code="error_code"
-      :string-code="string_code" />
 
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, defineEmits } from 'vue';
-import Notification from "@/components/notification.vue";
+import { ref, defineProps, defineEmits, type Ref } from 'vue';
+
+
 
 const correo = ref('');
 const contrasena = ref('');
-
-const error_code = ref(0);
-const string_code = ref('')
-const show_notification = ref(false)
-
-
 const registrado = ref(false);
 const titulo = ref('Iniciar Seccion')
-const emit = defineEmits(['crear', 'registrar','registroCompleto']);   
+
+const emit = defineEmits(['crear', 'registrar','registroCompleto','is_restaurant']);   
 
 const Registrar = () => {
-  console.log(correo.value.length)
   if (correo.value.length > 0 && contrasena.value.length > 0) {
+
+    const variables_to_send = { // se empacan las variables a enviar para un uso facil
+      correo: correo.value,
+      contrasena: contrasena.value
+    }
+
+    // PUT HTTP API
+
+    // comment this if, only to test propuses
+    if (correo.value === 'a@a.a'){
+      emit('is_restaurant',true)
+      // open restaurant extra UI
+    }
+
+
     emit('registroCompleto', true);
     
   }else{
-    show_notification.value = true
-    error_code.value = 1
-    string_code.value = "Se Ingresaron Datos Erroneos"
+    submit_error("Se Ingresaron Datos Erroneos");
   }
 };
 
@@ -71,6 +76,23 @@ const iniciopantalla = () => {
   registrado.value = true;
   titulo.value = '';
 };
+
+
+  const theres_error = ref(false);
+  const theres_error_string = ref('');
+
+  const submit_error = (error_msg:string) => {
+    theres_error.value = true
+    if (error_msg.length>0) {
+      theres_error_string.value = error_msg
+    }else {
+      theres_error_string.value = 'Something Went Wrong'
+    }
+  }
+
+  const cancel_error = () => {
+    theres_error.value = false
+  }
 
 </script>
 
