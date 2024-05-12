@@ -34,6 +34,12 @@
 
       </div>
 
+      <a class="form" href="https://github.com/RainBWP/UI-RestaurantApplication" target="_blank">
+            <!-- github link button with icon github -->
+            <h2>Repositorio github</h2>
+            <button class="github" ></button>
+      </a>
+
 
     </div>
   </div>
@@ -157,4 +163,23 @@ width: 95%;
 h1 {
   text-align: center;
 }
+
+.github{
+        background-image: url('/github.svg');
+        background-size: cover;
+        background-size:40px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        cursor: pointer;
+        height: 50px;
+    }
+a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    text-decoration: none;
+    color: var(--apt-color-text);
+}
+
 </style>

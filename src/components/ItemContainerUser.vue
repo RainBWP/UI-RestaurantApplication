@@ -39,7 +39,7 @@
         /* outline: solid black; */
         overflow: hidden;
         background-color: var(--color-text-element-background);
-
+        color: var(--apt-color-text);
         border-radius: 20px;
 
         flex-direction: column;
@@ -105,7 +105,7 @@
         background-color: var(--color-button-background);
         box-shadow: 0px 4px 6px #0006;
         text-align: center;
-        color: var(--color-text);
+        color: var(--apt-button-text);
         
     }
 

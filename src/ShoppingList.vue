@@ -59,7 +59,7 @@ const showPayScreen = () => {
                 <h2>Total:</h2>
                 <h2>${{ (ItemValor/100).toFixed(2) }}</h2>
             </div>
-            <button @click="showPayScreen">Proceder a la Compra</button>
+            <button @click="showPayScreen" class="comprar">Proceder a la Compra</button>
             <button @click="showCarrito()" class="regresar">Regresar</button>
         </div>
     </div>
@@ -98,6 +98,7 @@ const showPayScreen = () => {
     }
     .shopingReady{
         padding: 5%;
+        
 
         border-radius: min(5vw,50px);
 
@@ -109,9 +110,15 @@ const showPayScreen = () => {
         margin-bottom: 5vw;
         margin-top: 0;
 
+
     }
     .shopDisplay{
         /* width: 50%; */
+    }
+
+    .comprar{
+        color: var(--apt-button-text);
+
     }
 
     button {
@@ -123,6 +130,7 @@ const showPayScreen = () => {
         border: none;
         box-shadow:  0px 0px 10px #000000; 
         margin: 20px;
+        color: var(--apt-button-text);
 
         font-size: min(50px,5vw);
         font-weight: bold;
@@ -132,6 +140,7 @@ const showPayScreen = () => {
     }
     .regresar{
         font-size: min(30px,3vw);
+        color: var(--apt-button-text);
     }
 
     button:hover {

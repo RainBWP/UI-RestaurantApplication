@@ -94,6 +94,7 @@ const data = defineProps<ShoppingData>()
         border: none;
         font-size: min(40px,4vw); /* Ajusta este valor según tus necesidades */
         text-align: center;
-        color: var(--color-text)
+        color: var(--apt-button-text);
+
     }
 </style>

@@ -7,6 +7,8 @@ body{
   overflow-x: hidden;
   padding: 0%;
   margin: 0%;
+  background-color: var(--apt-background);
+  color: var(--apt-text);
     
 }
 :root {
@@ -27,6 +29,8 @@ body{
 
 }
 
+/* Crear css para modo noche */
+
 :root {
   --color-background: var(--apt-background);
 
@@ -39,10 +43,30 @@ body{
   --color-button-background:var(--apt-button-background);
   --color-button-background-hover:var(--apt-button-background-hover);
   --color-button-secundary:var(--apt-button-secundary);
+  --apt-button-text:var(--apt-text);
 
   --color-background-error:var(var(--apt-element-background-error))
 
 }
+@media (prefers-color-scheme: dark){
+  :root {
+    --apt-background:#0e0e00;
+    --apt-background-dark:#FFF;
+    --apt-element-background:#0d2d2f;
+    --apt-text:#dcdcdc;
+    --apt-contrast-text:#000;
+    --apt-text-label:#9D9994;
+    --apt-text-element-background:#2A2A2A;
+  
+    --apt-button-background:#FBF59B;
+    --apt-button-background-hover: #fffeed;
+    --apt-button-secundary:#FAF1C0;
+    --apt-button-text:#212000;
+  
+    --apt-element-background-error:#e68383;
+  }
+}
+
   
 .gradient {
   width: 100%;
@@ -84,7 +108,7 @@ h3{
 label {
   display: block;
   margin-bottom: 5px;
-  color: black; /* Color del texto de las etiquetas */
+  color: var(--apt-text); /* Color del texto de las etiquetas */
   font-weight: bold;
 }
 
@@ -98,7 +122,7 @@ input {
 
 button {
   box-shadow: 0px 4px 6px #0006;
-  color:var(--color-text);
+  color:var(--apt-button-text);
   border: none;
   border-radius: .5vw;
   margin: 10px; /* Agregamos un espacio entre los botones */

@@ -356,11 +356,15 @@ const get_restaurant = (id_restaurant:number) => { // obtener el restaurante sel
         />
 
         <Registro v-if="!registroCompleto && accion" @registroCompleto="handleRegistroCompleto" />
-      </div>
+      
+        
+    </div>
     </div> 
+
+    
 </template>
 
 <style scoped>
-
+    
 </style>
 
