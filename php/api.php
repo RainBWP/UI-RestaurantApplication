@@ -1,5 +1,8 @@
 <?php
 class Api {
+
+    // manejar solicitudes de API POST
+
     public function insertCliente($nombre, $correo, $contrasena) {
         $conexion = new Conexion();
         $db = $conexion->getConexion();
@@ -139,45 +142,40 @@ class Api {
         $conexion = new Conexion();
         $db = $conexion->getConexion();
 
+        // Obtener el ID del cliente o negocio
         if ($usuario_handle == 'Cliente') {
-            $stmt = $db->prepare("SELECT * FROM credenciales WHERE email = ? AND password = ?");
-            $stmt->bindParam(':email', $email_cliente);
-
-        }
-        else if ($usuario_handle == 'Vendedor') {
-            $stmt = $db->prepare("SELECT * FROM credenciales_negocios WHERE email_negocio = ? AND password_negocio = ?");
-            $stmt->bindParam(':email_negocio', $email_cliente);
-
-        }
-        else {
+            $stmt = $db->prepare("SELECT id FROM credenciales WHERE email = ?");
+        } else if ($usuario_handle == 'Vendedor') {
+            $stmt = $db->prepare("SELECT id FROM credenciales_negocios WHERE email_negocio = ?");
+        } else {
             return 'No User';
         }
-
+        console.log($stmt);
+        $stmt->bindParam(1, $email);
         $stmt->execute();
-    
-        // Verificar si se encontró el cliente
+
         if ($stmt->rowCount() > 0) {
-            // Obtener los datos del cliente
-            $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $cliente;
+            $id = $stmt->fetch(PDO::FETCH_ASSOC)['id'];
+
+            // Obtener el nombre del cliente o negocio
+            if ($usuario_handle == 'Cliente') {
+                $stmt = $db->prepare("SELECT nombre FROM clientes WHERE id = ?");
+            } else if ($usuario_handle == 'Vendedor') {
+                $stmt = $db->prepare("SELECT nombre FROM negocios WHERE id = ?");
+            }
+
+            $stmt->bindParam(1, $id);
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                return $stmt->fetch(PDO::FETCH_ASSOC)['nombre'];
+            } else {
+                return 'Nombre no encontrado';
+            }
         } else {
-            return 'Cliente no encontrado';
+            return 'ID no encontrado';
         }
     }
 
-    public function deleteProducto($id_producto) {
-        $conexion = new Conexion;
-        $db = $conexion->getConexion();
-        $sql = "DELETE FROM menu WHERE id_menu = :id_producto";
-        $consulta = $db->prepare($sql);
-        $consulta->bindParam('id_producto', $id_producto);
-        $resultado = $consulta->execute();
-
-        if ($resultado) {
-            return 'success';
-        } else {
-            return 'Error al eliminar producto';
-        }
-    }
 }
 ?>

@@ -99,7 +99,7 @@ const Registrar = () => {
           emit('is_restaurant',true)
         }
         emit('registroCompleto', true);
-        promps.getUserInfo(correo.value) // llamamos a la funcion de obtener datos de user
+        promps.getUserInfo(correo.value,variables_to_send.usuario) // llamamos a la funcion de obtener datos de user
       } else {
         submit_error("Correo electrónico o contraseña incorrectos");
       }
@@ -107,6 +107,14 @@ const Registrar = () => {
     .catch(error => {
       console.error('Error:', error);
       submit_error("Error al conectar con el servidor");
+
+      // solamente para pagina estatica
+      if (variables_to_send.email === 'a@a.a' && variables_to_send.password === 'a') {
+        alert('Inicio de sesión exitoso');
+        emit('registroCompleto', true);
+        
+      }
+
     });
   }else{
     submit_error("Por favor, complete todos los campos");

@@ -101,13 +101,15 @@ function getUserInfo(user_email_function:string, user_type_funcion:string) {
     // call user info
 
     const POST = {
+        tipo: "NombreCliente",
         email_cliente:user_email_function,
         usuario_handle:user_type_funcion,
     }
 
     axios.post('http://localhost/AppVue/', POST)
         .then(response => {
-            console.log(response.data);
+            console.log('http://localhost/AppVue/'+ POST)
+            console.log(response);
             
             if (response.data === 'success') {
                 console.log(POST)
@@ -117,12 +119,12 @@ function getUserInfo(user_email_function:string, user_type_funcion:string) {
                 // Necesito que response.data solamente tenga esto
                 // response.data.username = "Oscar"
             } else {
-                alert('Error al registrar producto. Por favor, inténtalo de nuevo.');
+                alert('Al obtener nombre del usuario.');
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Error al Registrar Producto. Por favor, inténtalo de nuevo.');
+            alert('Error al conectar al servidor.');
         });
 
     // put new info

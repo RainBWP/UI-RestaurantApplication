@@ -50,8 +50,6 @@
 
   
 <script setup lang="ts">
-  import Notification from "@/components/notification.vue";
-  import { readConfigFile } from "typescript";
   import { ref, defineProps, defineEmits } from 'vue';
   import axios from 'axios';
   //import { useRouter } from 'vue-router'; // Importa useRouter de Vue Router
@@ -102,6 +100,7 @@
       // HTTP API
       axios.post('http://localhost/AppVue/', variables_to_send)
       .then(response => {
+        console.log(response)
         if (response.data === 'success') {
           emit('registroCompleto', true);
           alert('Registro de cliente exitoso');

@@ -37,6 +37,10 @@ if ($method == "POST") {
         $email = $data['email'];
         $password = $data['password'];
         $json = $api->inicioSesion($usuario, $email, $password);
+    }elseif ($data['tipo'] == "NombreCliente") {
+        $email = $data['email_cliente'];
+        $tipoUsuario = $data['usuario_handle'];
+        $json = $api->getClienteName($email, $tipoUsuario);
     }
     else {
         echo "Tipo de usuario indefinido";
