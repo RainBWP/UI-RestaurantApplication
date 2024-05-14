@@ -8,44 +8,56 @@ if ($method == "POST") {
     $json = null;
     $data = json_decode(file_get_contents("php://input"), true);
     $api = new Api();
-    if($data['tipo'] == "Cliente") {
-        $nombre = $data['nombre'];
-        $correo = $data['correo'];
-        $contrasena = $data['contrasena'];
-        $json = $api->insertCliente($nombre, $correo, $contrasena);
-    }
-    else if ($data['tipo'] == "Negocio") {
-        $nombreD = $data['nombre_propietario'];
-        $nombreN = $data['nombre_negicio'];
-        $direccion = $data['direccion'];
-        $rfc = $data['rfc'];
-        $correoN = $data['correo'];
-        $contrasenaN = $data['contrasena'];
-        $json = $api->insertNegocio($nombreD, $nombreN, $direccion, $rfc, $correoN, $contrasenaN);
-    }
-    else if ($data['tipo'] == "Producto") {
-        $nombreP = $data['producto_nombre'];
-        $descripcion = $data['producto_descripcion'];
-        $precio = $data['producto_precio'];
-        $categoria = $data['producto_categoria'];
-        $id_negocio = $data['id_negocio'];
-        $imagen = $data['producto_imagen'];
-        $json = $api->insertProducto($nombreP, $descripcion, $precio, $categoria, $id_negocio, $imagen);
-    }
-    else if ($data['tipo'] == "Login") {
-        $usuario = $data['usuario'];
-        $email = $data['email'];
-        $password = $data['password'];
-        $json = $api->inicioSesion($usuario, $email, $password);
-    }else if ($data['tipo'] == "NombreCliente") {
-        $email = $data['email_cliente'];
-        $tipoUsuario = $data['usuario_handle'];
-        $json = $api->getClienteName($email, $tipoUsuario);
-    }else if ($data['tipo'] == "MenuNegocio") {
-        $id_negocio = $data['id_negocio'];
-        $json = $api->getMenu($id_negocio);
-    } else {
-        echo "Tipo de usuario indefinido";
+    switch ($data['tipo']) {
+        case "Cliente":
+            $nombre = $data['nombre'];
+            $correo = $data['correo'];
+            $contrasena = $data['contrasena'];
+            $json = $api->insertCliente($nombre, $correo, $contrasena);
+            break;
+
+        case "Negocio":
+            $nombreD = $data['nombre_propietario'];
+            $nombreN = $data['nombre_negicio'];
+            $direccion = $data['direccion'];
+            $rfc = $data['rfc'];
+            $correoN = $data['correo'];
+            $contrasenaN = $data['contrasena'];
+            $json = $api->insertNegocio($nombreD, $nombreN, $direccion, $rfc, $correoN, $contrasenaN);
+            break;
+
+        case "Producto":
+            $nombreP = $data['producto_nombre'];
+            $descripcion = $data['producto_descripcion'];
+            $precio = $data['producto_precio'];
+            $categoria = $data['producto_categoria'];
+            $id_negocio = $data['id_negocio'];
+            $imagen = $data['producto_imagen'];
+            $json = $api->insertProducto($nombreP, $descripcion, $precio, $categoria, $id_negocio, $imagen);
+            break;
+
+        case "Login":
+            $usuario = $data['usuario'];
+            $email = $data['email'];
+            $password = $data['password'];
+            $json = $api->inicioSesion($usuario, $email, $password);
+            break;
+
+        case "NombreCliente":
+            $email = $data['email_cliente'];
+            $tipoUsuario = $data['usuario_handle'];
+            $json = $api->getClienteName($email, $tipoUsuario);
+            break;
+
+        case "MenuNegocio":
+            $id_negocio = $data['restaurant_id'];
+            $vector = $api->getMenu($id_negocio);
+            $json = json_encode($vector);
+            break;
+
+        default:
+            echo "404";
+            break;
     }
     echo $json;
 }
