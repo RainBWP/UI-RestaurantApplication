@@ -48,7 +48,7 @@ const accionRegistrar = () => {
 function getfromJSON() {
     Object.assign(dataRef.value, dataJson);
 }
-//getfromJSON()
+getfromJSON()
 
 
 function getUserInfo(user_email_function:string, user_type_funcion:string) { 
