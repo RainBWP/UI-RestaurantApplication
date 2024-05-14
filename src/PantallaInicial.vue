@@ -89,6 +89,12 @@ const Registrar = () => {
       password: contrasena.value
     }
 
+    if (variables_to_send.email === 'a@a.a' && variables_to_send.password === 'a') {
+        alert('Inicio de sesión exitoso');
+        emit('registroCompleto', true);
+        // only static page
+      }
+
     // POST HTTP API
     axios.post('http://localhost/AppVue/', variables_to_send)
     .then(response => {
@@ -109,11 +115,7 @@ const Registrar = () => {
       submit_error("Error al conectar con el servidor");
 
       // solamente para pagina estatica
-      if (variables_to_send.email === 'a@a.a' && variables_to_send.password === 'a') {
-        alert('Inicio de sesión exitoso');
-        emit('registroCompleto', true);
-        
-      }
+      
 
     });
   }else{
