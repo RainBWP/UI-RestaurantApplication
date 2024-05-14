@@ -21,12 +21,6 @@ CREATE TABLE `clientes` (
   `nombre` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `credenciales`
---
-
 CREATE TABLE `credenciales` (
   `id_credencial` int(11) NOT NULL,
   `email` text DEFAULT NULL,
