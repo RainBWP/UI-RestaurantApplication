@@ -3,6 +3,8 @@
     import {type restaurant_selector } from "@/interfaces";
     
     const promps = defineProps<restaurant_selector>()
+
+    console.log(promps)
 </script>
 
 <template>
@@ -24,9 +26,10 @@
 
 <style scoped>
 .restaurant-grid {
-  display: grid;
-  grid-template-columns: 1fr; /* Una columna */
-  grid-gap: 20px; /* Espacio entre elementos */
-  justify-items: center;
+    display: grid;
+    grid-template-columns: 1fr; /* Una columna */
+    grid-gap: 20px; /* Espacio entre elementos */
+    justify-items: center;
+    max-width: 100%; /* Limita el ancho máximo de los elementos */
 }
 </style>

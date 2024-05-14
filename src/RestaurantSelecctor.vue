@@ -41,6 +41,7 @@ const promps = defineProps<restaurantShowing>()
   padding: 7vw;
   width: min(400px,80%);
   border-radius: min(3vw,20px);
+  height: 80px;
 }
 .thisThing {
   display: flex;

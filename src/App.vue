@@ -45,54 +45,6 @@ const accionRegistrar = () => {
 
 // HTTP API borrar json
 
-const callHTTPInfo = async () => {
-    let user_name:string = dataRef.value.nombreCliente
-    let restaurant_name:string = dataRef.value.nombreRestaurante
-    let restaurant_id:number=dataRef.value.idRestaurante
-    let itemShopArray:ItemShop[] = dataRef.value.itemShopArray
-
-    try {
-        if (dataJson) { // comentar cuando https sirva o guardarlo en el else
-            Object.assign(dataRef.value, dataJson);
-
-            user_name=dataJson.nombreCliente
-            restaurant_name= dataJson.nombreRestaurante
-            restaurant_id = dataJson.idRestaurante
-            //itemShopArray = dataJson.itemShopArray
-        }
-
-        // Obtiene los productos desde la base de datos
-        const response = await axios.get('http://localhost/AppVue/'); // Usar Axios para hacer la solicitud GET
-        console.log(response.data);
-        if (response.status === 200) {
-            const menuData = response.data; // Obtener los datos del menú de la respuesta
-            // Asignar los datos del menú al ref
-            dataRef.value.itemShopArray = menuData.map((item: any) => ({
-            idItem: item.id_menu,
-            nombre: item.nombre_producto,
-            imagen: item.imagen,
-            imagenAlt: 'Nada',
-            precio: (item.precio),
-            cantidad: 0 // Inicialmente la cantidad es cero
-            }));
-        } else {
-            console.error('Error al obtener datos del menú');
-        }
-
-        // actualiza toda la informacion recibida
-        Object.assign(dataRef.value, {
-            nombreCliente: user_name, // en caso de no recibir algo
-            nombreRestaurante: restaurant_name, // se pone el valor por defecto
-            idRestaurante: restaurant_id, // ahora se mantiene fijado esto
-            //itemShopArray: itemShopArray,
-        })
-    } catch (error) {
-        console.error('Error al obtener datos del Menú:', error);
-    }
-}
-
-callHTTPInfo() // comment this to stop getting json data
-
 
 function getUserInfo(user_email_function:string, user_type_funcion:string) { 
     // user_email_function contiene para obtener el nombre del usuario
@@ -146,54 +98,33 @@ function getAllRestaurant() {
         }
     
     */
-    let db_restaurants_info:restaurantShowing[] = dataRef.value.itemRestaurantArray
-
-    const POST = {
-        function_to_call:"getPublicRestaurantInformation"
-    }
-
-    // call restaurant important info
-    axios.post('http://localhost/AppVue/') // obtener
+    axios.get('http://localhost/AppVue/') // obtener
         .then(response => {
-            console.log(response.data);
-            
-            if (response.data === 'success') {
-                console.log(POST)
-                //emit('registroCompleto', true);
-                //alert('Registro de producto exitoso');
+            if (response.status == 200 && response.statusText == 'OK') {
+                console.log(response.data);
+                const db_restaurants_info = response.data.map((returnData: { restaurant_name: any; direccion: any; restaurant_id: any; restaurant_logo: any; }) => ({
+                    restaurant_name: returnData.restaurant_name,
+                    direccion: returnData.direccion,
+                    restaurant_id: returnData.restaurant_id,
+                    get_restaurant: () => true,
+                    restaurant_logo: returnData.restaurant_logo
+                }));
 
-                /* 
-                Necesito que response.data contenga esto
-                response.data = [{
-                    restaurant_name:"nombre Tal",
-                    direccion: "de aqui",
-                    restaurant_id: 1,
-                    get_restaurant:"", // puede estar vacio esto, pero declarado
-                    restaurant_logo:"/UI-Restaurant/imagen.png",
-                },
-                {
-                    restaurant_name:"nombre Tal dos",
-                    direccion: "de aqui no soy",
-                    restaurant_id: 2,
-                    get_restaurant:"", // puede estar vacio esto, pero declarado
-                    restaurant_logo:"/UI-Restaurant/imagen1.png",
-                }]
-                */
+                console.log(db_restaurants_info);
+
+                // Asignar los datos actualizados a dataRef.value.itemRestaurantArray
+                dataRef.value.itemRestaurantArray = db_restaurants_info;
+
+                console.log(dataRef.value.itemRestaurantArray);
             } else {
-                db_restaurants_info = dataRef.value.itemRestaurantArray
-                return false
+                console.error('Error en la solicitud:', response.statusText);
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            db_restaurants_info = dataRef.value.itemRestaurantArray
-            return false
         });
-
-    dataRef.value.itemRestaurantArray = db_restaurants_info
-
-    return true // regresar si la operacion se realizo con exito
 }
+
 
 function getRestaurantMenu(restaurant_id_function:number) {
     // restaurant_id_function se usa para obtener por https el menu de cierto restaurante
@@ -319,6 +250,8 @@ const get_restaurant = (id_restaurant:number) => { // obtener el restaurante sel
         console.error('opsie, try again')
     }
 }
+
+getAllRestaurant()
 
 
 </script>

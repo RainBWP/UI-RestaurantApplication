@@ -110,13 +110,14 @@ class Api {
         }
     }
 
-    public function getMenu() {
+    public function getMenu($id_negocio) {
         $menu = array();
         $conexion = new Conexion();
         $db = $conexion->getConexion();
         // Consulta SQL para obtener los datos del menú
-        $sql = "SELECT id_menu, nombre_producto, descripcion, precio, categoria, imagen FROM menu";
+        $sql = "SELECT id_menu, nombre_producto, descripcion, precio, categoria, imagen, id_negocio FROM menu WHERE id_negocio = :id_negocio";
         $consulta = $db->prepare($sql);
+        $consulta->bindParam(':id_negocio', $id_negocio);
         $consulta->execute();
 
         // Verificar si hay resultados
@@ -175,6 +176,29 @@ class Api {
         } else {
             return 'ID no encontrado';
         }
+    }
+
+    public function getAllRestaurants() {
+        $restaurantes = array();
+        $conexion = new Conexion();
+        $db = $conexion->getConexion();
+        $sql = "SELECT id_negocio, nombre_negocio, direccion FROM negocios";
+        $consulta = $db->prepare($sql);
+        $consulta->execute();
+
+        if ($consulta->rowCount() > 0) {
+            while($fila = $consulta->fetch()) {
+                $restaurantes[] = array(
+                    "restaurant_id" => $fila['id_negocio'],
+                    "restaurant_name" => $fila['nombre_negocio'],
+                    "direccion" => $fila['direccion'],
+                    "restaurant_logo" => "",
+                    "get_restaurant" => ""
+                );
+            }
+        }
+
+        return $restaurantes;
     }
 
 }
