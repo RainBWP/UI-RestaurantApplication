@@ -45,6 +45,11 @@ const accionRegistrar = () => {
 
 // HTTP API borrar json
 
+function getfromJSON() {
+    Object.assign(dataRef.value, dataJson);
+}
+//getfromJSON()
+
 
 function getUserInfo(user_email_function:string, user_type_funcion:string) { 
     // user_email_function contiene para obtener el nombre del usuario
@@ -60,18 +65,14 @@ function getUserInfo(user_email_function:string, user_type_funcion:string) {
 
     axios.post('http://localhost/AppVue/', POST)
         .then(response => {
-            console.log('http://localhost/AppVue/'+ POST)
             console.log(response);
             
-            if (response.data === 'success') {
-                console.log(POST)
-                //emit('registroCompleto', true);
-                //alert('Registro de producto exitoso');
-
-                // Necesito que response.data solamente tenga esto
-                // response.data.username = "Oscar"
+            if (response.data === 'none') {
+                console.log('No se encontro el usuario')
             } else {
-                alert('Al obtener nombre del usuario.');
+                user_name = response.data;
+                dataRef.value.nombreCliente = user_name
+
             }
         })
         .catch(error => {
@@ -80,7 +81,8 @@ function getUserInfo(user_email_function:string, user_type_funcion:string) {
         });
 
     // put new info
-    dataRef.value.nombreCliente = user_name
+    console.log(dataRef.value.nombreCliente)
+    //dataRef.value.nombreCliente = user_name
 
     return true // regresar si la operacion se realizo con exito
 }
@@ -126,60 +128,41 @@ function getAllRestaurant() {
 }
 
 
-function getRestaurantMenu(restaurant_id_function:number) {
-    // restaurant_id_function se usa para obtener por https el menu de cierto restaurante
-    let restaurnt_name:string = dataRef.value.nombreRestaurante
-    let restaurant_id:number = dataRef.value.idRestaurante
-    let restaurant_menu:ItemShop[] = dataRef.value.itemShopArray
-
+function getRestaurantMenu(restaurant_id_function: number) {
     const POST = {
+        tipo: 'MenuNegocio',
         restaurant_id: restaurant_id_function
-    }
+    };
 
-    // call restaurant menu info
-
-    axios.post('http://localhost/AppVue/') // obtener
+    axios.post('http://localhost/AppVue/', POST)
         .then(response => {
-            console.log(response.data);
-            
-            if (response.data === 'success') {
-                console.log(POST)
-                //emit('registroCompleto', true);
-                //alert('Registro de producto exitoso');
+            const responseData = response.data;
+            console.log(responseData);
 
-                /* 
-                necesito que response.data contenga
-                response.data = {
-                    restaurant_name: "Nombre tal",
-                    restaurant_id:123,
-                    restaurant_menu:[{
-                        item1...
-                    },
-                    {
-                        item2...
-                    }]
-                }
-                */
-            } else {
-                restaurnt_name = dataRef.value.nombreRestaurante
-                restaurant_id = dataRef.value.idRestaurante
-                restaurant_menu = dataRef.value.itemShopArray
-                return false
-            }
+            // Actualizar los datos en dataRef
+            dataRef.value.nombreRestaurante = responseData.nombreRestaurante;
+            dataRef.value.idRestaurante = restaurant_id_function;
+
+            const restaurantMenu = responseData.menu.map((menuItem: any) => ({
+                idItem: menuItem.id_menu,
+                imagen: menuItem.imagen,
+                descripcion: menuItem.descripcion,
+                imagenAlt: menuItem.descripcion,
+                nombre: menuItem.nombre,
+                precio: menuItem.precio,
+                cantidad: 0
+            }));
+
+            dataRef.value.itemShopArray = restaurantMenu;
+
+            console.log("Data actualizada:", dataRef.value);
+            return true
+
         })
         .catch(error => {
             console.error('Error:', error);
-            restaurnt_name = dataRef.value.nombreRestaurante
-            restaurant_id = dataRef.value.idRestaurante
-            restaurant_menu = dataRef.value.itemShopArray
-            return false
+            return false;
         });
-
-    dataRef.value.idRestaurante = restaurant_id
-    dataRef.value.nombreRestaurante = restaurnt_name
-    dataRef.value.itemShopArray = restaurant_menu
-    
-    return true // regresar si la operacion se realizo con exito
 }
 
 const storedItemsSelected = localStorage.getItem('itemsSelected');
@@ -242,13 +225,10 @@ const acction_restaurant = () => {
 };
 
 const restaurant_selected = ref(false)
-const get_restaurant = (id_restaurant:number) => { // obtener el restaurante seleccionado para llamar a buscar la informacion dentro del restaurante menu
-    const request_done = getRestaurantMenu(id_restaurant)
-    if (request_done) {
-        restaurant_selected.value = true
-    } else {
-        console.error('opsie, try again')
-    }
+const get_restaurant = async (id_restaurant:number) => { // obtener el restaurante seleccionado para llamar a buscar la informacion dentro del restaurante menu
+    console.log(id_restaurant)
+    const request_done = getRestaurantMenu(id_restaurant);
+    restaurant_selected.value = true;
 }
 
 getAllRestaurant()

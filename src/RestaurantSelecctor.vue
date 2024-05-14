@@ -15,15 +15,15 @@ const promps = defineProps<restaurantShowing>()
       <div >
         <img :src="restaurant_logo || '/UI-RestaurantApplication/logo.svg'" alt="Logo">
       </div>
-      <div>
+      <div >
         <h2>{{ restaurant_name }}</h2>
         <p>{{ direccion }}</p>
       </div>
         
         
     </div>
-    <div>
-      <button @click="get_restaurant(restaurant_id)">Go Buy</button>
+    <div class="menu">
+      <button  @click="get_restaurant(restaurant_id)">Go Buy</button>
     </div>
   </div>
 
@@ -46,11 +46,17 @@ const promps = defineProps<restaurantShowing>()
 .thisThing {
   display: flex;
   align-items: center;
-  
+  widows: 70%;
 }
 .thisThing div img {
   margin-right: 20px;
   width: 60px;
   filter: drop-shadow(0 0 3px #0003);
 }
+.menu {
+  width: 30%;
+  max-width: 30%;
+  min-width: 30%;
+}
+
 </style>

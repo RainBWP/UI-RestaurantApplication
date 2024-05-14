@@ -89,7 +89,7 @@ h3{
 }
 
 .container {
-  width: 500px;
+  width: 90vw;
   max-width: 400px; /* Ancho máximo del contenedor */
   margin: 0 auto; /* Centrar horizontalmente */
 }
