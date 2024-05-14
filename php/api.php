@@ -124,9 +124,10 @@ class Api {
         if ($consulta->rowCount() > 0) {
             // Recorrer los resultados y agregarlos al array
             while($fila = $consulta->fetch()) {
+                $nombre_negocio = $this->getNombreNegocio($fila['id_negocio']); // Obtener el nombre del negocio
                 $menu[] = array(
                     "id_menu" => $fila['id_menu'],
-                    "nombre_producto" => $fila['nombre_producto'],
+                    "nombre" => $fila['nombre_producto'],
                     "descripcion" => $fila['descripcion'],
                     "precio" => $fila['precio'],
                     "categoria" => $fila['categoria'],
@@ -134,47 +135,59 @@ class Api {
                 );
             }
         }
-
         // Devolver el array
-        return $menu;
+        return array('nombreRestaurante' => $nombre_negocio,
+                'menu' => $menu); ;
     }
 
-    public function getClienteName($email_cliente,$usuario_handle) {
+    private function getNombreNegocio($id_negocio) {
         $conexion = new Conexion();
         $db = $conexion->getConexion();
-
-        // Obtener el ID del cliente o negocio
-        if ($usuario_handle == 'Cliente') {
-            $stmt = $db->prepare("SELECT id FROM credenciales WHERE email = ?");
-        } else if ($usuario_handle == 'Vendedor') {
-            $stmt = $db->prepare("SELECT id FROM credenciales_negocios WHERE email_negocio = ?");
-        } else {
-            return 'No User';
-        }
-        console.log($stmt);
-        $stmt->bindParam(1, $email);
+        $stmt = $db->prepare("SELECT nombre_negocio FROM negocios WHERE id_negocio = :id_negocio");
+        $stmt->bindParam(':id_negocio', $id_negocio);
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
-            $id = $stmt->fetch(PDO::FETCH_ASSOC)['id'];
-
+            return $stmt->fetch(PDO::FETCH_ASSOC)['nombre_negocio'];
+        } else {
+            return '';
+        }
+    }
+    public function getClienteName($email_cliente,$usuario_handle) {
+        $conexion = new Conexion();
+        $db = $conexion->getConexion();
+    
+        // Obtener el ID del cliente o negocio
+        if ($usuario_handle == 'Cliente') {
+            $stmt = $db->prepare("SELECT id_cliente FROM credenciales WHERE email = ?");
+        } else if ($usuario_handle == 'Vendedor') {
+            $stmt = $db->prepare("SELECT id_negocio FROM credenciales_negocios WHERE email_negocio = ?");
+        } else {
+            return 'none';
+        }
+        $stmt->bindParam(1, $email_cliente);
+        $stmt->execute();
+    
+        if ($stmt->rowCount() > 0) {
+            $id = $stmt->fetch(PDO::FETCH_ASSOC)['id_cliente'];
+    
             // Obtener el nombre del cliente o negocio
             if ($usuario_handle == 'Cliente') {
-                $stmt = $db->prepare("SELECT nombre FROM clientes WHERE id = ?");
+                $stmt = $db->prepare("SELECT nombre FROM clientes WHERE id_cliente = ?");
             } else if ($usuario_handle == 'Vendedor') {
-                $stmt = $db->prepare("SELECT nombre FROM negocios WHERE id = ?");
+                $stmt = $db->prepare("SELECT nombre_negocio FROM negocios WHERE id_negocio = ?");
             }
-
+    
             $stmt->bindParam(1, $id);
             $stmt->execute();
-
+    
             if ($stmt->rowCount() > 0) {
                 return $stmt->fetch(PDO::FETCH_ASSOC)['nombre'];
             } else {
-                return 'Nombre no encontrado';
+                return 'none';
             }
         } else {
-            return 'ID no encontrado';
+            return 'none';
         }
     }
 
