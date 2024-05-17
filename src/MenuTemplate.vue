@@ -92,12 +92,12 @@ const ShowBorrar = () =>{
   <div class="template">
     
   <div v-if="canIShow">
-    <h1>Menu</h1>
+    <h1>Menú</h1>
     <h3>{{nombreRestaurante }}</h3>
     <div class="importantItems">
       <h2>Total: ${{ (itemValor/100).toFixed(2) }}</h2>
-      <h2 class="clientName">{{ nombreCliente }}</h2>
     </div>
+    <h2 class="clientName">{{ nombreCliente }}</h2>
 
     <div v-if="isRestaunrat" class="importantItems">
       <button @click="ShowAgregar">Agregar Alimento</button>
@@ -179,6 +179,7 @@ const ShowBorrar = () =>{
     font-size: 20px;
     color: var(--color-text-label);
     font-weight: lighter;
+    text-align: center;
   }
   .carrito {
     position: fixed;

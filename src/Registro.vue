@@ -37,6 +37,10 @@
          <label for="rfc">RFC</label>
          <input type="text" id="rfc" v-model="rfc" required maxlength="15">
         </div>
+        <div>
+          <label for="imagen">Link de Imagen del Negocio</label>
+          <input type="text" id="imagen" v-model="imagen" required>
+        </div>
       </form>
     </div>
 
@@ -54,6 +58,11 @@
   import axios from 'axios';
   //import { useRouter } from 'vue-router'; // Importa useRouter de Vue Router
 
+  interface promps {
+    getAllRestaurant: () => void;
+  }
+const promps = defineProps<promps>();
+
   const nombre = ref('');
   const correo = ref('');
   const contrasena = ref('');
@@ -61,6 +70,7 @@
   const nombreNegocio = ref('');
   const direccionNegocio = ref('');
   const rfc = ref('');
+  const imagen = ref('');
   
   const emit = defineEmits(['registroCompleto']);
 
@@ -134,7 +144,8 @@ const submitVendedorForm = () => {
       correo: correo.value,
       contrasena: contrasena.value,
       direccion: direccionNegocio.value,
-      rfc:rfc.value
+      rfc: rfc.value,
+      imagen: imagen.value
     }
 
 
@@ -144,6 +155,7 @@ const submitVendedorForm = () => {
       if (response.data === 'success') {
         emit('registroCompleto', true);
         //alert('Registro de negocio exitoso');
+        promps.getAllRestaurant() // llamamos a la funcion de obtener los restaurantes para que actualice la lista
       } else {
         //alert('Error al registrar negocio. Por favor, inténtalo de nuevo.');
       }

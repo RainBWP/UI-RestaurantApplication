@@ -23,7 +23,8 @@ if ($method == "POST") {
             $rfc = $data['rfc'];
             $correoN = $data['correo'];
             $contrasenaN = $data['contrasena'];
-            $json = $api->insertNegocio($nombreD, $nombreN, $direccion, $rfc, $correoN, $contrasenaN);
+            $imagenN = $data['imagen'];
+            $json = $api->insertNegocio($nombreD, $nombreN, $direccion, $rfc, $correoN, $contrasenaN, $imagenN);
             break;
 
         case "Producto":

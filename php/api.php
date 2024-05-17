@@ -33,14 +33,15 @@ class Api {
         }
     }
 
-    public function insertNegocio($nombreD, $nombreN, $direccion, $rfc, $correoN, $contrasenaN) {
+    public function insertNegocio($nombreD, $nombreN, $direccion, $rfc, $correoN, $contrasenaN, $imagenN) {
         $conexion = new Conexion();
         $db = $conexion->getConexion();
-        $stmt = $db->prepare("INSERT INTO negocios (nombre_dueño, nombre_negocio, direccion, rfc) VALUES (:nombreD, :nombreN, :direccion, :rfc)");
+        $stmt = $db->prepare("INSERT INTO negocios (nombre_dueño, nombre_negocio, direccion, rfc, imagen) VALUES (:nombreD, :nombreN, :direccion, :rfc, :imagenN)");
         $stmt->bindParam(':nombreD', $nombreD);
         $stmt->bindParam(':nombreN', $nombreN);
         $stmt->bindParam(':direccion', $direccion);
         $stmt->bindParam(':rfc', $rfc);
+        $stmt->bindParam(':imagenN', $imagenN);
         $stmt->execute();
 
         // Verificar si la inserción fue exitosa
@@ -169,20 +170,26 @@ class Api {
         $stmt->execute();
     
         if ($stmt->rowCount() > 0) {
-            $id = $stmt->fetch(PDO::FETCH_ASSOC)['id_cliente'];
+            //$id = $stmt->fetch(PDO::FETCH_ASSOC)['id_cliente'];
     
             // Obtener el nombre del cliente o negocio
             if ($usuario_handle == 'Cliente') {
+                $id = $stmt->fetch(PDO::FETCH_ASSOC)['id_cliente'];
                 $stmt = $db->prepare("SELECT nombre FROM clientes WHERE id_cliente = ?");
             } else if ($usuario_handle == 'Vendedor') {
-                $stmt = $db->prepare("SELECT nombre_negocio FROM negocios WHERE id_negocio = ?");
+                $id = $stmt->fetch(PDO::FETCH_ASSOC)['id_negocio'];
+                $stmt = $db->prepare("SELECT nombre_dueño FROM negocios WHERE id_negocio = ?");
             }
     
             $stmt->bindParam(1, $id);
             $stmt->execute();
     
             if ($stmt->rowCount() > 0) {
-                return $stmt->fetch(PDO::FETCH_ASSOC)['nombre'];
+                if ($usuario_handle == 'Cliente') {
+                    return $stmt->fetch(PDO::FETCH_ASSOC)['nombre'];
+                } else {
+                    return $stmt->fetch(PDO::FETCH_ASSOC)['nombre_dueño'];
+                }
             } else {
                 return 'none';
             }
@@ -195,7 +202,7 @@ class Api {
         $restaurantes = array();
         $conexion = new Conexion();
         $db = $conexion->getConexion();
-        $sql = "SELECT id_negocio, nombre_negocio, direccion FROM negocios";
+        $sql = "SELECT id_negocio, nombre_negocio, direccion, imagen FROM negocios";
         $consulta = $db->prepare($sql);
         $consulta->execute();
 
@@ -205,7 +212,7 @@ class Api {
                     "restaurant_id" => $fila['id_negocio'],
                     "restaurant_name" => $fila['nombre_negocio'],
                     "direccion" => $fila['direccion'],
-                    "restaurant_logo" => "",
+                    "restaurant_logo" => $fila['imagen'],
                     "get_restaurant" => ""
                 );
             }

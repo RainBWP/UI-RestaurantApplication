@@ -54,6 +54,7 @@ CREATE TABLE `negocios` (
   `nombre_negocio` text DEFAULT NULL,
   `direccion` text DEFAULT NULL,
   `rfc` text DEFAULT NULL
+  `imagen` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 ALTER TABLE `clientes`

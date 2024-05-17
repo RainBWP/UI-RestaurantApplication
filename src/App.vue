@@ -270,7 +270,11 @@ getAllRestaurant()
           :is_restaurant="is_restaurant"
         />
 
-        <Registro v-if="!registroCompleto && accion" @registroCompleto="handleRegistroCompleto" />
+        <Registro
+          v-if="!registroCompleto && accion"
+          @registroCompleto="handleRegistroCompleto" 
+          :getAllRestaurant="getAllRestaurant"
+        />
       
         
     </div>
