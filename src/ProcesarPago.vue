@@ -1,9 +1,21 @@
 <script setup lang="ts">
+    import { ref } from 'vue'
+
+    const procesesing = ref(".")
+    // animar procesar pago moviendo los ...
+    setInterval(() => {
+        procesesing.value = procesesing.value + "."
+        if (procesesing.value.length > 10) {
+            procesesing.value = "."
+        }
+    }, 800)
+    
 </script>
 
 <template>
     <div class="pagoScreen">
-        <h2>Procesando Pago...</h2>
+        <h2 id="procesesing">Procesando Pago</h2>
+        <h2>{{ procesesing }}</h2>
     </div>
     
 </template>
