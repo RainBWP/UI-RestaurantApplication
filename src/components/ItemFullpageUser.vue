@@ -66,7 +66,7 @@ const data = defineProps<ItemFull>()
         bottom: 0px;
         left: 20px;
 
-        color: var(--color-contrast-text);
+        color: var(--color-text);
         font-size: 40px;
         font-weight: lighter;
         z-index: 3;
@@ -92,7 +92,7 @@ const data = defineProps<ItemFull>()
         margin: 5%;
         padding: 5%;
 
-        border-radius: 5vw;
+        border-radius: min(5vw,50px);
 
         background-color: var(--color-text-element-background)
     }
@@ -120,7 +120,8 @@ const data = defineProps<ItemFull>()
         background-color: var(--color-button-background);
         width: 100%;
         max-width: 100%;
-        border-radius:3vw;
+        border-radius: min(3vw,30px);
+
         
         
         border: none;
@@ -134,19 +135,21 @@ const data = defineProps<ItemFull>()
     }
     .infoObj button {
         background-color: var(--color-button-background);
-        border-radius: 2vw;
+        border-radius: min(2vw,20px);
+
         padding: 2%;
         overflow: hidden;
         border: none;
         box-shadow:  0px 0px 10px #000000; 
 
         font-size: 2.5vh;
-        color: var(--color-text);
+        color: var(--apt-button-text);
 
     }
     .infoObj button:hover{
         background-color: var(--color-button-background-hover);
-        font-size: 2.7vh;
+        border-radius: min(2.7vh,27px);
+
     }
     .infoObj div {
         display: flex;
