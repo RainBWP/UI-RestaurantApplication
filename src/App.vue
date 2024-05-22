@@ -156,6 +156,15 @@ function getRestaurantMenu(restaurant_id_function: number) {
             dataRef.value.itemShopArray = restaurantMenu;
 
             console.log("Data actualizada:", dataRef.value);
+
+            itemsSelected = dataRef.value.itemShopArray
+ 
+            // actualiza el carrito
+            itemsSelected.forEach(item => {
+                item.cantidad=0;
+            });
+            calculateMoney()
+
             return true
 
         })
@@ -175,8 +184,9 @@ function calculateMoney() {
         totalItemsMoney.value += itemsSelected.precio * itemsSelected.cantidad
     });
 }
+console.log(storedItemsSelected)
 
-if (storedItemsSelected) {
+/* if (storedItemsSelected) {
     dataRef.value.itemShopArray = JSON.parse(storedItemsSelected);
     itemsSelected = dataRef.value.itemShopArray
     calculateMoney()
@@ -188,7 +198,7 @@ if (storedItemsSelected) {
         item.cantidad=0;
     });
     calculateMoney()
-}
+} */
 
 
 
